@@ -12,6 +12,14 @@ const PHASES = [
     "description": "Recepción de los diseños finales de DDS y revisión técnica de cada sección y animación. Se identifican los puntos más complejos de construir en Gutenberg y se arma la estructura base de la página. Los diseños deben venir aprobados por DDS.",
     "tasks": [
       {
+        "id": "1k",
+        "name": "Kickoff meeting",
+        "done": true,
+        "status": "approved",
+        "dueDate": "22 de octubre",
+        "description": "Reunión de inicio con DDS para revisar el alcance del proyecto, los tiempos y los próximos pasos."
+      },
+      {
         "id": "1a",
         "name": "Entrega de diseños finales (desktop y mobile)",
         "done": false,
