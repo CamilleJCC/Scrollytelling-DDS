@@ -22,7 +22,6 @@
     <div class="view-tabs">
       <button class="tab active" id="tabGantt">Cronograma</button>
       <button class="tab" id="tabCards">Tablero</button>
-      <button class="tab" id="tabMeetings">Reuniones</button>
     </div>
     <div class="header-actions" id="headerActions"></div>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">◐</button>
@@ -152,12 +151,10 @@
   const tabs = {
     gantt:    document.getElementById('tabGantt'),
     cards:    document.getElementById('tabCards'),
-    meetings: document.getElementById('tabMeetings'),
   };
   const views = {
     gantt:    document.getElementById('ganttView'),
     cards:    document.getElementById('cardView'),
-    meetings: document.getElementById('meetingsView'),
   };
 
   let ganttBuilt = false;
@@ -188,7 +185,6 @@
 
   tabs.gantt.addEventListener('click',    ()=>switchTo('gantt'));
   tabs.cards.addEventListener('click',    ()=>switchTo('cards'));
-  tabs.meetings.addEventListener('click', ()=>switchTo('meetings'));
 
   // ── MEETING SUB-VIEW TABS ───────────────────────────────────────────────────
   document.getElementById('meetTabCards').addEventListener('click', ()=>{

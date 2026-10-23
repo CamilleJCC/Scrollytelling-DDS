@@ -9,9 +9,6 @@ const PHASES = [
     "start": "2026-11-02",
     "end": "2026-11-06",
     "description": "Recepción de los diseños finales del cliente y revisión técnica de cada sección y animación. Se identifican los puntos complejos de construir en Gutenberg y se prepara la estructura base de la página. Los diseños deben estar aprobados por el cliente antes de entregarse.",
-    "meetingIds": [
-      "m1"
-    ],
     "tasks": [
       {
         "id": "1a",
@@ -90,9 +87,6 @@ const PHASES = [
     "start": "2026-11-16",
     "end": "2026-11-27",
     "description": "Desarrollo de todas las animaciones e interacciones de scroll (CSS y JavaScript) y adaptación del comportamiento a tablet y móvil.",
-    "meetingIds": [
-      "m2"
-    ],
     "tasks": [
       {
         "id": "3a",
@@ -128,9 +122,6 @@ const PHASES = [
     "start": "2026-11-30",
     "end": "2026-12-04",
     "description": "Revisión de la Beta por parte del cliente y ronda de ajustes. Los cambios sobre el diseño aprobado se consideran solicitudes de cambio y se presupuestan aparte.",
-    "meetingIds": [
-      "m3"
-    ],
     "tasks": [
       {
         "id": "4a",
@@ -157,10 +148,6 @@ const PHASES = [
     "start": "2026-12-07",
     "end": "2026-12-14",
     "description": "Pruebas en distintos dispositivos y navegadores, optimización de rendimiento y versión accesible para usuarios con movimiento reducido. El 8 de diciembre es festivo. El lanzamiento incluye una garantía técnica de 20 días post-publicación.",
-    "meetingIds": [
-      "m4",
-      "m5"
-    ],
     "tasks": [
       {
         "id": "5a",
@@ -207,50 +194,4 @@ const QUOTATION_URL = "";
 const MIRO_URL      = "";
 const SHARE_URL     = "";
 
-const MEETINGS = [
-  {
-    "id": "m1",
-    "title": "Kickoff y Entrega de Diseños",
-    "date": "2026-11-02",
-    "time": "18:00",
-    "duration": 60,
-    "description": "Reunión de inicio. El cliente presenta los diseños finales y explica las animaciones previstas sección por sección. Se confirman fechas de entrega de contenido.",
-    "meetLink": ""
-  },
-  {
-    "id": "m2",
-    "title": "Revisión de la Beta",
-    "date": "2026-11-27",
-    "time": "18:00",
-    "duration": 60,
-    "description": "Presentación de la página en desarrollo con todas las secciones e interacciones implementadas. Punto de partida para el feedback del cliente.",
-    "meetLink": ""
-  },
-  {
-    "id": "m3",
-    "title": "Cierre de Ajustes",
-    "date": "2026-12-04",
-    "time": "18:00",
-    "duration": 45,
-    "description": "Revisión de los ajustes aplicados tras el feedback. Aprobación de la página antes del testing final.",
-    "meetLink": ""
-  },
-  {
-    "id": "m4",
-    "title": "Sesión de Entrega y Tutorial",
-    "date": "2026-12-11",
-    "time": "10:00",
-    "duration": 60,
-    "description": "Tutorial para editar textos e imágenes en Gutenberg sin romper las animaciones.",
-    "meetLink": ""
-  },
-  {
-    "id": "m5",
-    "title": "Lanzamiento",
-    "date": "2026-12-14",
-    "time": "10:00",
-    "duration": 30,
-    "description": "Confirmación del lanzamiento de la página. Inicio de la garantía técnica de 20 días.",
-    "meetLink": ""
-  }
-];
+const MEETINGS = [];
