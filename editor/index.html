@@ -226,7 +226,7 @@ select.em-input option, select.ed-status-tag option { background: #1e1e1c; color
 .task-pill { background: var(--gray-100) !important; border-color: rgba(255,255,255,.08) !important; }
 .task-pill.in-progress { background: rgba(234,179,8,.2) !important; color: #fbbf24 !important; border-color: rgba(234,179,8,.3) !important; }
 .task-pill.in-review   { background: rgba(59,130,246,.18) !important; color: #93c5fd !important; border-color: rgba(59,130,246,.3) !important; }
-.task-pill.approved    { background: rgba(34,197,94,.18) !important; color: #86efac !important; border-color: rgba(34,197,94,.3) !important; }
+.task-pill.approved, .task-pill.completed { background: rgba(34,197,94,.18) !important; color: #86efac !important; border-color: rgba(34,197,94,.3) !important; }
 .save-status { color: var(--gray-400) !important; }
 @media (max-width: 640px) {
   header { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -459,6 +459,7 @@ select.em-input option, select.ed-status-tag option { background: #1e1e1c; color
       {v:'in-progress',l:'En progreso'},
       {v:'in-review',  l:'En revisión'},
       {v:'approved',   l:'Aprobado'},
+      {v:'completed',  l:'Completado'},
     ];
 
     function renderTaskList(){
@@ -470,7 +471,7 @@ select.em-input option, select.ed-status-tag option { background: #1e1e1c; color
         const curStatus=t.status||(t.done?'approved':t.inProgress?'in-progress':'todo');
         const sel=document.createElement('select'); sel.className='ed-status-tag'; sel.dataset.status=curStatus;
         STATUS_OPTS.forEach(({v,l})=>{ const o=document.createElement('option'); o.value=v; o.textContent=l; if(v===curStatus)o.selected=true; sel.appendChild(o); });
-        sel.addEventListener('change',()=>{ sel.dataset.status=sel.value; t.status=sel.value; t.done=sel.value==='approved'; t.inProgress=sel.value==='in-progress'; buildGantt(phases,{editable:true,onPhaseClick:openPhaseEditor,onAddPhase:addPhase}); renderSummary(phases); });
+        sel.addEventListener('change',()=>{ sel.dataset.status=sel.value; t.status=sel.value; t.done=(sel.value==='approved'||sel.value==='completed'); t.inProgress=sel.value==='in-progress'; buildGantt(phases,{editable:true,onPhaseClick:openPhaseEditor,onAddPhase:addPhase}); renderSummary(phases); });
         const ni=document.createElement('input'); ni.className='em-input'; ni.type='text'; ni.value=t.name; ni.style.flex='1';
         ni.addEventListener('input',()=>{ t.name=ni.value; });
         const flagBtn=document.createElement('button'); flagBtn.className='ed-task-flag'+(t.clientInput?' active':''); flagBtn.title='Requiere acción del cliente'; flagBtn.textContent='⚑';

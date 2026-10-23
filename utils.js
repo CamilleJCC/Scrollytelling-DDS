@@ -6,7 +6,7 @@ let WEEK_W = 56;
 function pd(s) { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
 function fd(d) { return d.toLocaleDateString('es-ES',{day:'numeric',month:'short'}); }
 function taskStatus(t){ return t.status||(t.done?'approved':t.inProgress?'in-progress':'todo'); }
-function taskWeight(t){ const s=taskStatus(t); return s==='approved'?1:s==='in-review'?0.75:s==='in-progress'?0.5:0; }
+function taskWeight(t){ const s=taskStatus(t); return (s==='approved'||s==='completed')?1:s==='in-review'?0.75:s==='in-progress'?0.5:0; }
 function phasePct(p) { const ts=p.tasks.filter(t=>!t.deliverable); return ts.length ? Math.round(ts.reduce((sum,t)=>sum+taskWeight(t),0)/ts.length*100) : 0; }
 function phaseStatus(p) { const c=phasePct(p); if(c===100)return'done'; if(c>0||p.tasks.some(t=>{const s=taskStatus(t);return s==='in-progress'||s==='in-review';}))return'in-progress'; return'todo'; }
 
@@ -90,7 +90,7 @@ function openDock(phase){
     if(statusRow) statusRow.after(descEl);
   }
   const list=document.getElementById('dockTaskList'); list.innerHTML='';
-  const SL={'todo':'Pendiente','in-progress':'En progreso','in-review':'En revisión','approved':'Aprobado'};
+  const SL={'todo':'Pendiente','in-progress':'En progreso','in-review':'En revisión','approved':'Aprobado','completed':'Completado'};
   const regularTasks=phase.tasks.filter(t=>!t.deliverable);
   const deliverableTasks=phase.tasks.filter(t=>t.deliverable);
   regularTasks.forEach(t=>{
@@ -98,7 +98,7 @@ function openDock(phase){
     const s=taskStatus(t);
     const row=document.createElement('div'); row.className='icon-flex';
     const dot=document.createElement('div'); dot.className=taskDotClass(t);
-    const nm=document.createElement('span'); nm.className='dock-task-name'+(s==='approved'?' done':''); nm.textContent=t.name;
+    const nm=document.createElement('span'); nm.className='dock-task-name'+((s==='approved'||s==='completed')?' done':''); nm.textContent=t.name;
     row.appendChild(dot); row.appendChild(nm);
     li.appendChild(row);
     const pill=document.createElement('span'); pill.className='task-pill '+s; pill.textContent=SL[s]||'Pending';
@@ -228,7 +228,7 @@ function initDock(){
 // ── SHARED DOT HELPER ─────────────────────────────────────────────────────────
 function taskDotClass(t){
   const s=taskStatus(t);
-  if(s==='approved')    return 'sub-dot done';
+  if(s==='approved'||s==='completed') return 'sub-dot done';
   if(s==='in-progress') return 'sub-dot in-progress';
   if(s==='in-review')   return 'sub-dot in-review';
   return 'sub-dot';
@@ -661,13 +661,13 @@ function buildGantt(phases,{editable=false,onPhaseClick=null,onAddPhase=null,onR
     } else {
       // Read-only expandable drawer (client view)
       const drawer=document.createElement('div'); drawer.className='subtask-drawer'+(phase.expanded?' open':'');
-      const SL_T={'todo':'Pendiente','in-progress':'En progreso','in-review':'En revisión','approved':'Aprobado'};
+      const SL_T={'todo':'Pendiente','in-progress':'En progreso','in-review':'En revisión','approved':'Aprobado','completed':'Completado'};
       phase.tasks.forEach(task=>{
         const sr=document.createElement('div'); sr.className='subtask-row';
         const sl=document.createElement('div'); sl.className='subtask-label readonly';
         const dot=document.createElement('div'); dot.className=taskDotClass(task);
         const ts=taskStatus(task);
-        const sn=document.createElement('span'); sn.className='subtask-name'+(ts==='approved'?' done':''); sn.textContent=task.name;
+        const sn=document.createElement('span'); sn.className='subtask-name'+((ts==='approved'||ts==='completed')?' done':''); sn.textContent=task.name;
         const tag=document.createElement('span'); tag.className='task-pill '+ts; tag.textContent=SL_T[ts]||'Pending';
         sl.appendChild(dot); sl.appendChild(sn); sl.appendChild(tag); sr.appendChild(sl);
         const sba=document.createElement('div'); sba.className='subtask-bar-area'; sba.style.width=totalW+'px';
@@ -783,12 +783,12 @@ function buildCards(phases){
     card.appendChild(pr);
     requestAnimationFrame(()=>requestAnimationFrame(()=>{cf.style.width=pct+'%';}));
     const ul=document.createElement('ul'); ul.className='card-tasks';
-    const SL_C={'todo':'Pendiente','in-progress':'En progreso','in-review':'En revisión','approved':'Aprobado'};
+    const SL_C={'todo':'Pendiente','in-progress':'En progreso','in-review':'En revisión','approved':'Aprobado','completed':'Completado'};
     phase.tasks.forEach(t=>{
       const li=document.createElement('li'); li.className='card-task-item';
       const dot=document.createElement('div'); dot.className=taskDotClass(t);
       const ts=taskStatus(t);
-      const tn=document.createElement('span'); tn.className='card-task-name'+(ts==='approved'?' done':''); tn.textContent=t.name;
+      const tn=document.createElement('span'); tn.className='card-task-name'+((ts==='approved'||ts==='completed')?' done':''); tn.textContent=t.name;
       const tpill=document.createElement('span'); tpill.className='task-pill '+ts; tpill.textContent=SL_C[ts]||'Pending';
       li.appendChild(dot); li.appendChild(tn); li.appendChild(tpill); ul.appendChild(li);
     });

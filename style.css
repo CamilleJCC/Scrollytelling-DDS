@@ -376,7 +376,8 @@ header {
   border-color: rgba(59, 130, 246, .3);
 }
 
-.task-pill.approved {
+.task-pill.approved,
+.task-pill.completed {
   background: rgba(34, 197, 94, .14);
   color: #15803d;
   border-color: rgba(34, 197, 94, .35);
@@ -2982,7 +2983,8 @@ header {
   border-color: rgba(59, 130, 246, .3);
 }
 
-.ed-status-tag[data-status="approved"] {
+.ed-status-tag[data-status="approved"],
+.ed-status-tag[data-status="completed"] {
   background: rgba(34, 197, 94, .14);
   color: #15803d;
   border-color: rgba(34, 197, 94, .35);
