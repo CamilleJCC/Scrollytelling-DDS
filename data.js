@@ -9,7 +9,7 @@ const PHASES = [
     "name": "Fase 1: Revisión de Diseños y Planificación Técnica",
     "start": "2026-11-02",
     "end": "2026-11-06",
-    "description": "Recibir diseños finales de DDS y revisión técnica de cada sección y animación. Se identifican los puntos más complejos de construir en Gutenberg y se arma la estructura base de la página. Los diseños deben venir aprobados por DDS.",
+    "description": "Recibir diseños finales de DDS y revisión técnica de cada sección y animación. Se identifican los puntos más complejos de construir en Gutenberg y se arma la estructura base de la página. ",
     "tasks": [
       {
         "id": "1k",
@@ -41,7 +41,7 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "4 – 6 de noviembre",
-        "description": "Creación de la página en WordPress y armado de su estructura: las secciones ordenadas según el diseño, listas para recibir el contenido y las animaciones."
+        "description": "Creación de la página en WordPress y armado de su estructura."
       },
       {
         "id": "1e",
