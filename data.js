@@ -9,7 +9,7 @@ const PHASES = [
     "name": "Fase 1: Revisión de Diseños y Planificación Técnica",
     "start": "2026-11-02",
     "end": "2026-11-06",
-    "description": "Recepción de los diseños finales de DDS y revisión técnica de cada sección y animación. Se identifican los puntos complejos de construir en Gutenberg y se prepara la estructura base de la página. Los diseños deben estar aprobados por DDS antes de entregarse.",
+    "description": "Recepción de los diseños finales de DDS y revisión técnica de cada sección y animación. Se identifican los puntos más complejos de construir en Gutenberg y se arma la estructura base de la página. Los diseños deben venir aprobados por DDS.",
     "tasks": [
       {
         "id": "1a",
@@ -54,7 +54,7 @@ const PHASES = [
         "dueDate": "TBD",
         "deliverable": true,
         "deliverableType": "pdf",
-        "description": "Documento breve de DDS con el desglose de secciones, los efectos de scroll previstos para cada una y cualquier ajuste acordado sobre los diseños."
+        "description": "Documento breve de DDS con el desglose de secciones y los efectos de scroll de cada una."
       }
     ]
   },
@@ -71,7 +71,7 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "9 – 11 de noviembre",
-        "description": "Maquetación de cada sección de la página con bloques nativos de Gutenberg, respetando la estructura del diseño."
+        "description": "Maquetación de cada sección con bloques nativos de Gutenberg, siguiendo la estructura del diseño."
       },
       {
         "id": "2b",
@@ -79,7 +79,7 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "11 – 13 de noviembre",
-        "description": "Tipografía, colores, espaciados y ajustes del layout de Gutenberg (márgenes y contenedores) para que la página coincida con el diseño."
+        "description": "Tipografía, colores, espaciados y ajustes del layout de Gutenberg (márgenes y contenedores) para que la página quede igual al diseño."
       },
       {
         "id": "2c",
@@ -123,7 +123,7 @@ const PHASES = [
         "dueDate": "TBD",
         "deliverable": true,
         "deliverableType": "link",
-        "description": "Enlace privado a la página en desarrollo con todas las secciones e interacciones implementadas, lista para la revisión de DDS."
+        "description": "Enlace privado a la página en desarrollo, con todas las secciones e interacciones listas para que DDS la revise."
       }
     ]
   },
@@ -132,7 +132,7 @@ const PHASES = [
     "name": "Fase 4: Revisión de DDS y Ajustes",
     "start": "2026-11-30",
     "end": "2026-12-04",
-    "description": "Revisión de la Beta por parte de DDS y ronda de ajustes. Los cambios sobre el diseño aprobado se consideran solicitudes de cambio y se presupuestan aparte.",
+    "description": "Revisión de la Beta por parte de DDS y ronda de ajustes. Los cambios sobre el diseño aprobado se consideran fuera de alcance y se cobran aparte, a 60 €/h + IVA.",
     "tasks": [
       {
         "id": "4a",
@@ -141,7 +141,7 @@ const PHASES = [
         "status": "todo",
         "dueDate": "1 de diciembre",
         "clientInput": true,
-        "description": "DDS envía todos los comentarios sobre la Beta en un solo documento o listado, para poder aplicarlos en una única ronda."
+        "description": "DDS envía todos los comentarios de la Beta juntos, en un solo documento o lista, para aplicarlos en una sola ronda."
       },
       {
         "id": "4b",
@@ -158,7 +158,7 @@ const PHASES = [
     "name": "Fase 5: Testing y Lanzamiento",
     "start": "2026-12-07",
     "end": "2026-12-14",
-    "description": "Pruebas en distintos dispositivos y navegadores, optimización de rendimiento y versión accesible para usuarios con movimiento reducido. El 8 de diciembre es festivo. El lanzamiento incluye una garantía técnica de 20 días post-publicación.",
+    "description": "Pruebas en distintos dispositivos y navegadores, optimización de carga y una versión sin animaciones para usuarios con movimiento reducido. El 8 de diciembre es festivo. Incluye una garantía técnica de 20 días después del lanzamiento.",
     "tasks": [
       {
         "id": "5a",
@@ -174,7 +174,7 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "9 – 10 de diciembre",
-        "description": "Optimización de imágenes y scripts para una carga rápida, y versión sin animaciones para usuarios que tienen activada la opción de reducir movimiento en su dispositivo."
+        "description": "Optimización de imágenes y scripts para que la página cargue rápido, y una versión sin animaciones para quienes tienen activada la opción de reducir movimiento en su dispositivo."
       },
       {
         "id": "5c",
@@ -192,7 +192,7 @@ const PHASES = [
         "dueDate": "TBD",
         "deliverable": true,
         "deliverableType": "link",
-        "description": "Publicación de la página de scrollytelling. Inicio de la garantía técnica de 20 días post-lanzamiento para ajustes."
+        "description": "Publicación de la página. Empieza la garantía técnica de 20 días para ajustes."
       }
     ]
   }
