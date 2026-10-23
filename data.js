@@ -9,7 +9,7 @@ const PHASES = [
     "name": "Fase 1: Revisión de Diseños y Planificación Técnica",
     "start": "2026-11-02",
     "end": "2026-11-06",
-    "description": "Recepción de los diseños finales de DDS y revisión técnica de cada sección y animación. Se identifican los puntos más complejos de construir en Gutenberg y se arma la estructura base de la página. Los diseños deben venir aprobados por DDS.",
+    "description": "Recibir diseños finales de DDS y revisión técnica de cada sección y animación. Se identifican los puntos más complejos de construir en Gutenberg y se arma la estructura base de la página. Los diseños deben venir aprobados por DDS.",
     "tasks": [
       {
         "id": "1k",
@@ -24,8 +24,8 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "2 de noviembre",
-        "clientInput": true,
-        "description": "DDS entrega los diseños finales de todas las secciones, junto a explicaciones o un video de referencia indicando el movimiento: qué se fija, qué aparece y qué se mueve con el scroll."
+        "description": "DDS entrega los diseños finales de todas las secciones, junto a explicaciones o un video de referencia indicando el movimiento.",
+        "clientInput": true
       },
       {
         "id": "1b",
@@ -70,7 +70,7 @@ const PHASES = [
     "name": "Fase 2: Maquetación, Interacciones de Scroll y Responsive",
     "start": "2026-11-09",
     "end": "2026-11-27",
-    "description": "Build de todas las secciones en Gutenberg al mismo tiempo que sus animaciones de scroll y su versión responsive. Así, mientras se maqueta, se va probando que todo funcione en desktop, tablet y móvil.",
+    "description": "Build de todas las secciones en Gutenberg, animaciones de scroll y versión responsive.",
     "tasks": [
       {
         "id": "2a",
@@ -110,8 +110,8 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "13 de noviembre",
-        "clientInput": true,
-        "description": "DDS entrega todos los textos definitivos y las imágenes optimizadas a 72 dpi."
+        "description": "DDS entrega todos los textos definitivos y las imágenes optimizadas a 72 dpi.",
+        "clientInput": true
       },
       {
         "id": "2f",
@@ -130,7 +130,7 @@ const PHASES = [
     "name": "Fase 3: Revisión de DDS y Ajustes",
     "start": "2026-11-30",
     "end": "2026-12-04",
-    "description": "Revisión de la Beta por parte de DDS y ronda de ajustes. Los cambios sobre el diseño aprobado se consideran fuera de alcance y se cobran aparte, a 60 €/h + IVA.",
+    "description": "Revisión de la Beta por parte de DDS y ronda de ajustes. Los cambios sobre el diseño publicado se consideran fuera de alcance y se cobran aparte, a 60 €/h + IVA.",
     "tasks": [
       {
         "id": "4a",
@@ -138,8 +138,8 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "1 de diciembre",
-        "clientInput": true,
-        "description": "DDS envía todos los comentarios de la Beta juntos, en un solo documento o lista, para aplicarlos en una sola ronda."
+        "description": "DDS envía todos los comentarios de la Beta juntos, en un solo documento o lista, para aplicarlos en una sola ronda. ",
+        "clientInput": true
       },
       {
         "id": "4b",
@@ -156,7 +156,7 @@ const PHASES = [
     "name": "Fase 4: Testing y Lanzamiento",
     "start": "2026-12-07",
     "end": "2026-12-14",
-    "description": "Pruebas en distintos dispositivos y navegadores, optimización de carga y una versión sin animaciones para usuarios con movimiento reducido. El 8 de diciembre es festivo. Incluye una garantía técnica de 20 días después del lanzamiento.",
+    "description": "Pruebas en distintos dispositivos y navegadores, optimización de carga y código para respetar la preferencia de movimiento reducido del usuario (prefers-reduced-motion). Incluye una garantía técnica de 20 días después del lanzamiento.",
     "tasks": [
       {
         "id": "5a",
