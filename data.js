@@ -130,7 +130,7 @@ const PHASES = [
     "name": "Fase 3: Revisión de DDS y Ajustes",
     "start": "2026-11-30",
     "end": "2026-12-04",
-    "description": "Revisión de la Beta por parte de DDS y ronda de ajustes. Los cambios sobre el diseño publicado se consideran fuera de alcance y se cobran aparte, a 60 €/h + IVA.",
+    "description": "Revisión de la Beta por parte de DDS y ronda de ajustes. Los cambios sobre el diseño publicado se cobran aparte, a 60 €/h + IVA.",
     "tasks": [
       {
         "id": "4a",
