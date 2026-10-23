@@ -48,13 +48,13 @@ const PHASES = [
       },
       {
         "id": "1d",
-        "name": "Plan técnico de construcción",
+        "name": "Desglose de secciones y animaciones (entrega de DDS)",
         "done": false,
         "status": "todo",
         "dueDate": "TBD",
         "deliverable": true,
         "deliverableType": "pdf",
-        "description": "Documento breve con el desglose de secciones, los efectos de scroll previstos y cualquier ajuste acordado sobre los diseños."
+        "description": "Documento breve de DDS con el desglose de secciones, los efectos de scroll previstos para cada una y cualquier ajuste acordado sobre los diseños."
       }
     ]
   },
