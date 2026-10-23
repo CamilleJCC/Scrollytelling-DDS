@@ -41,7 +41,7 @@ const PHASES = [
         "name": "Prototipo y diseños finales (entrega del cliente)",
         "done": false,
         "status": "todo",
-        "dueDate": "2026-11-02",
+        "dueDate": "TBD",
         "deliverable": true,
         "deliverableType": "link",
         "description": "Entrega por parte del cliente del prototipo y los diseños finales aprobados (desktop y mobile), con las indicaciones de cada animación."
@@ -51,7 +51,7 @@ const PHASES = [
         "name": "Plan técnico de construcción",
         "done": false,
         "status": "todo",
-        "dueDate": "2026-11-06",
+        "dueDate": "TBD",
         "deliverable": true,
         "deliverableType": "pdf",
         "description": "Documento breve con el desglose de secciones, los efectos de scroll previstos y cualquier ajuste acordado sobre los diseños."
@@ -120,7 +120,7 @@ const PHASES = [
         "name": "Enlace Beta",
         "done": false,
         "status": "todo",
-        "dueDate": "2026-11-27",
+        "dueDate": "TBD",
         "deliverable": true,
         "deliverableType": "link",
         "description": "Enlace privado a la página en desarrollo con todas las secciones e interacciones implementadas, lista para la revisión del cliente."
@@ -189,7 +189,7 @@ const PHASES = [
         "name": "Lanzamiento de la página",
         "done": false,
         "status": "todo",
-        "dueDate": "2026-12-14",
+        "dueDate": "TBD",
         "deliverable": true,
         "deliverableType": "link",
         "description": "Publicación de la página de scrollytelling. Inicio de la garantía técnica de 20 días post-lanzamiento para ajustes."
