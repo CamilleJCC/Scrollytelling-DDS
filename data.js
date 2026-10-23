@@ -172,7 +172,7 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "9 – 10 de diciembre",
-        "description": "Optimización de imágenes y scripts para que la página cargue rápido, y una versión sin animaciones para quienes tienen activada la opción de reducir movimiento en su dispositivo."
+        "description": "Optimización de imágenes y scripts para que la página cargue rápido, y código para respetar la preferencia de movimiento reducido del usuario (prefers-reduced-motion)."
       },
       {
         "id": "5c",
