@@ -44,7 +44,7 @@ const PHASES = [
         "dueDate": "2026-11-02",
         "deliverable": true,
         "deliverableType": "link",
-        "description": "Entrega por parte del cliente del prototipo y los diseños finales aprobados (desktop y mobile), con las indicaciones de cada animación. Es el punto de partida del desarrollo: sin esta entrega no puede comenzar la construcción."
+        "description": "Entrega por parte del cliente del prototipo y los diseños finales aprobados (desktop y mobile), con las indicaciones de cada animación."
       },
       {
         "id": "1d",
