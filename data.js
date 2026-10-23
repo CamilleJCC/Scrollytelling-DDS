@@ -16,8 +16,7 @@ const PHASES = [
         "name": "Kickoff meeting",
         "done": true,
         "status": "completed",
-        "dueDate": "22 de octubre",
-        "description": "Reunión de inicio con DDS para revisar el alcance del proyecto, los tiempos y los próximos pasos."
+        "dueDate": "22 de octubre"
       },
       {
         "id": "1a",
