@@ -60,17 +60,17 @@ const PHASES = [
   },
   {
     "id": 2,
-    "name": "Fase 2: Maquetación en Gutenberg",
+    "name": "Fase 2: Maquetación, Interacciones de Scroll y Responsive",
     "start": "2026-11-09",
-    "end": "2026-11-13",
-    "description": "Construcción de todas las secciones con bloques de Gutenberg y estilos CSS base: tipografía, colores, espaciados y layout según los diseños aprobados.",
+    "end": "2026-11-27",
+    "description": "Build de todas las secciones en Gutenberg, al mismo tiempo que sus animaciones de scroll y su versión responsive. Cada sección se maqueta, se anima y se adapta a tablet y móvil antes de pasar a la siguiente.",
     "tasks": [
       {
         "id": "2a",
         "name": "Construcción de secciones con bloques",
         "done": false,
         "status": "todo",
-        "dueDate": "9 – 11 de noviembre",
+        "dueDate": "9 – 20 de noviembre",
         "description": "Maquetación de cada sección con bloques nativos de Gutenberg, siguiendo la estructura del diseño."
       },
       {
@@ -78,8 +78,24 @@ const PHASES = [
         "name": "Estilos CSS base",
         "done": false,
         "status": "todo",
-        "dueDate": "11 – 13 de noviembre",
+        "dueDate": "9 – 20 de noviembre",
         "description": "Tipografía, colores, espaciados y ajustes del layout de Gutenberg (márgenes y contenedores) para que la página quede igual al diseño."
+      },
+      {
+        "id": "2d",
+        "name": "Animaciones e interacciones de scroll",
+        "done": false,
+        "status": "todo",
+        "dueDate": "9 – 24 de noviembre",
+        "description": "Implementación de los efectos de scroll definidos en el diseño: secciones fijas, apariciones, transiciones, etc. Usando las librerías GSAP + ScrollTrigger (animaciones ligadas al scroll y secciones fijas) y Lenis (scroll suave)."
+      },
+      {
+        "id": "2e",
+        "name": "Comportamiento responsive (tablet y móvil)",
+        "done": false,
+        "status": "todo",
+        "dueDate": "16 – 27 de noviembre",
+        "description": "Adaptación de las animaciones y del layout a tablet y móvil, según los diseños mobile entregados por DDS."
       },
       {
         "id": "2c",
@@ -89,34 +105,9 @@ const PHASES = [
         "dueDate": "13 de noviembre",
         "clientInput": true,
         "description": "DDS entrega todos los textos definitivos y las imágenes optimizadas a 72 dpi."
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "name": "Fase 3: Interacciones de Scroll y Responsive",
-    "start": "2026-11-16",
-    "end": "2026-11-27",
-    "description": "Desarrollo de todas las animaciones e interacciones de scroll (CSS y JavaScript) y adaptación del comportamiento a tablet y móvil.",
-    "tasks": [
-      {
-        "id": "3a",
-        "name": "Animaciones e interacciones de scroll",
-        "done": false,
-        "status": "todo",
-        "dueDate": "16 – 24 de noviembre",
-        "description": "Implementación de los efectos de scroll definidos en el diseño: secciones fijas, apariciones, transiciones, etc. Usando las librerías GSAP + ScrollTrigger (animaciones ligadas al scroll y secciones fijas) y Lenis (scroll suave)."
       },
       {
-        "id": "3b",
-        "name": "Comportamiento responsive (tablet y móvil)",
-        "done": false,
-        "status": "todo",
-        "dueDate": "23 – 27 de noviembre",
-        "description": "Adaptación de las animaciones y del layout a tablet y móvil, según los diseños mobile entregados por DDS."
-      },
-      {
-        "id": "3c",
+        "id": "2f",
         "name": "Enlace Beta",
         "done": false,
         "status": "todo",
@@ -128,8 +119,8 @@ const PHASES = [
     ]
   },
   {
-    "id": 4,
-    "name": "Fase 4: Revisión de DDS y Ajustes",
+    "id": 3,
+    "name": "Fase 3: Revisión de DDS y Ajustes",
     "start": "2026-11-30",
     "end": "2026-12-04",
     "description": "Revisión de la Beta por parte de DDS y ronda de ajustes. Los cambios sobre el diseño aprobado se consideran fuera de alcance y se cobran aparte, a 60 €/h + IVA.",
@@ -154,8 +145,8 @@ const PHASES = [
     ]
   },
   {
-    "id": 5,
-    "name": "Fase 5: Testing y Lanzamiento",
+    "id": 4,
+    "name": "Fase 4: Testing y Lanzamiento",
     "start": "2026-12-07",
     "end": "2026-12-14",
     "description": "Pruebas en distintos dispositivos y navegadores, optimización de carga y una versión sin animaciones para usuarios con movimiento reducido. El 8 de diciembre es festivo. Incluye una garantía técnica de 20 días después del lanzamiento.",
