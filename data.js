@@ -178,11 +178,11 @@ const PHASES = [
       },
       {
         "id": "5c",
-        "name": "Sesión de entrega y tutorial",
+        "name": "Sesión de entrega y tutorial (opcional)",
         "done": false,
         "status": "todo",
         "dueDate": "11 de diciembre",
-        "description": "Sesión para mostrar cómo editar textos e imágenes de la página en Gutenberg sin afectar las animaciones."
+        "description": "Opcional, a confirmar con el cliente. Sesión para mostrar cómo editar textos e imágenes de la página en Gutenberg sin afectar las animaciones."
       },
       {
         "id": "5d",
