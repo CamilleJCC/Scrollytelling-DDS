@@ -1806,7 +1806,7 @@ header {
   background: var(--gray-50);
   border-radius: var(--r-sm);
   font-size: 14px;
-  line-height: 1.65;
+  line-height: 1.1em;
   color: var(--gray-600);
   margin-top: -4px;
 }

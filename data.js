@@ -30,11 +30,11 @@ const PHASES = [
       },
       {
         "id": "1c",
-        "name": "Configuración de la página y estructura base",
+        "name": "Configuración y estructura de la página en WordPress. Instalación de plugins",
         "done": false,
         "status": "todo",
         "dueDate": "4 – 6 de noviembre",
-        "description": "Build de la página en WordPress."
+        "description": "Creación de la página en WordPress y armado de su estructura: las secciones ordenadas según el diseño, listas para recibir el contenido y las animaciones."
       },
       {
         "id": "1e",
