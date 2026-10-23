@@ -34,7 +34,7 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "4 – 6 de noviembre",
-        "description": "Creación de la página en WordPress y armado de su estructura: las secciones ordenadas según el diseño, listas para recibir el contenido y las animaciones."
+        "description": "Build de la página en WordPress."
       },
       {
         "id": "1e",
