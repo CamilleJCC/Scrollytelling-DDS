@@ -123,10 +123,10 @@ function openDock(phase){
       const li=document.createElement('li'); li.className='dock-deliverable-item';
       const hasPdf=(!d.deliverableType||d.deliverableType==='pdf')&&!!d.deliverableUrl;
       // Outer flex: content left, thumbnail right
-      const outer=document.createElement('div'); outer.style.cssText='display:flex;gap:10px;align-items:flex-start;';
-      const content=document.createElement('div'); content.style.cssText='flex:1;min-width:0;';
+      const outer=document.createElement('div'); outer.className='dock-deliverable-row';
+      const content=document.createElement('div'); content.className='dock-deliverable-content';
       // Header row: name on left, date badge on right
-      const itemHdr=document.createElement('div'); itemHdr.style.cssText='display:flex;align-items:flex-start;justify-content:space-between;gap:8px;';
+      const itemHdr=document.createElement('div'); itemHdr.className='dock-deliverable-head';
       const nm=document.createElement('div'); nm.className='dock-deliverable-name';
       nm.textContent=d.name.replace(/^Deliverable:\s*/i,'');
       itemHdr.appendChild(nm);
