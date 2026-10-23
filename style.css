@@ -55,7 +55,7 @@ body {
   background: var(--black);
   color: var(--white);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .2em;
   text-transform: uppercase;
   text-align: center;
@@ -92,7 +92,7 @@ header {
 
 .header-left h1 {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -101,7 +101,7 @@ header {
 
 .header-client {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--gray-500);
@@ -132,7 +132,7 @@ header {
   border: 1px solid rgba(0, 0, 0, .08);
   border-radius: 99px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -174,7 +174,7 @@ header {
 
 .header-launch-num {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 400;
   color: var(--gray-600);
   line-height: 1;
@@ -182,7 +182,7 @@ header {
 
 .header-launch-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -207,7 +207,7 @@ header {
 /* ── SHARED BUTTON ─────────────────────────────────────────────────────────── */
 .btn {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .14em;
   text-transform: uppercase;
   padding: 9px 20px;
@@ -248,7 +248,7 @@ header {
 
 .tab {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .14em;
   text-transform: uppercase;
   padding: 8px 20px;
@@ -282,7 +282,7 @@ header {
   padding: 14px var(--pad);
   border-bottom: 1px solid var(--gray-200);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -323,7 +323,7 @@ header {
 /* ── STATUS PILL (phase-level) ─────────────────────────────────────────────── */
 .status-pill {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 3px 8px;
@@ -350,7 +350,7 @@ header {
 /* ── TASK PILL (task-level, colored by status) ─────────────────────────────── */
 .task-pill {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 3px 8px;
@@ -423,7 +423,7 @@ header {
 
 .month-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -436,7 +436,7 @@ header {
 
 .week-cell {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--gray-400);
   width: var(--week-w);
   text-align: center;
@@ -583,7 +583,7 @@ header {
 
 .phase-num-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -627,7 +627,7 @@ header {
 
 .phase-pct {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--gray-400);
 }
 
@@ -759,7 +759,7 @@ header {
   top: -22px;
   transform: translateX(-50%);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--red);
@@ -774,7 +774,7 @@ header {
   -webkit-backdrop-filter: blur(8px);
   color: var(--white);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .07em;
   padding: 6px 12px;
   pointer-events: none;
@@ -984,7 +984,7 @@ header {
 
 .ms-dates {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--gray-500);
   flex-shrink: 0;
   text-align: right;
@@ -1015,7 +1015,7 @@ header {
 
 .ms-pct {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--gray-400);
 }
 
@@ -1078,7 +1078,7 @@ header {
 
 .card-num {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -1096,7 +1096,7 @@ header {
 
 .card-dates {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--gray-400);
   margin-bottom: 22px;
   letter-spacing: .04em;
@@ -1125,7 +1125,7 @@ header {
 
 .card-pct-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
   min-width: 36px;
   text-align: right;
@@ -1226,7 +1226,7 @@ header {
 
 .mli-btn {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 5px 10px;
@@ -1262,7 +1262,7 @@ header {
 
 .cal-month-heading {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -1321,7 +1321,7 @@ header {
 
 .meeting-card-date-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -1338,7 +1338,7 @@ header {
 
 .meeting-card-time {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--gray-600);
   letter-spacing: .04em;
   margin-bottom: 12px;
@@ -1398,7 +1398,7 @@ header {
   gap: 14px;
   margin: 12px 0 36px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -1417,7 +1417,7 @@ header {
   display: block;
   width: 100%;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .12em;
   text-transform: uppercase;
   padding: 10px 14px;
@@ -1440,7 +1440,7 @@ header {
   display: block;
   width: 100%;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .12em;
   text-transform: uppercase;
   padding: 10px 14px;
@@ -1465,7 +1465,7 @@ header {
   display: block;
   width: 100%;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .12em;
   text-transform: uppercase;
   padding: 9px 14px;
@@ -1511,7 +1511,7 @@ header {
 
 .summary-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -1542,7 +1542,7 @@ header {
 
 .progress-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -1606,7 +1606,7 @@ header {
 
 .dock-phase-num {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -1622,7 +1622,7 @@ header {
 
 .dock-dates {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -1682,7 +1682,7 @@ header {
 
 .dock-progress-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -1713,7 +1713,7 @@ header {
 
 .dock-status-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -1729,7 +1729,7 @@ header {
 
 .dock-section-title {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -1780,7 +1780,7 @@ header {
 /* replaced by .task-pill */
 .task-read-btn {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 3px 9px;
@@ -1817,7 +1817,7 @@ header {
 
 .task-action-badge {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .08em;
   text-transform: uppercase;
   padding: 3px 9px;
@@ -1831,7 +1831,7 @@ header {
 
 .task-due-date {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: -.01em;
   color: var(--black);
   font-weight: 500;
@@ -1843,7 +1843,7 @@ header {
 .dock-deliverables-header {
   list-style: none;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -1875,7 +1875,7 @@ header {
 
 .dock-deliverable-due {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -1897,7 +1897,7 @@ header {
 
 .dock-deliverable-pending {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -1922,7 +1922,7 @@ header {
 
 .task-feedback-btn {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 3px 9px;
@@ -1981,7 +1981,7 @@ header {
 
 .dock-mc-month {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--gray-500);
@@ -1998,7 +1998,7 @@ header {
 
 .dock-mc-meta {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .08em;
   color: var(--gray-600);
   margin-bottom: 8px;
@@ -2086,7 +2086,7 @@ header {
 
 .cr-subtitle {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--gray-600);
   letter-spacing: .08em;
   margin-top: 5px;
@@ -2123,7 +2123,7 @@ header {
 
 .cr-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -2154,7 +2154,7 @@ header {
 .cr-textarea {
   min-height: 80px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1.2em;
   resize: vertical;
 }
@@ -2177,7 +2177,7 @@ header {
 
 .cr-cancel {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 9px 18px;
@@ -2197,7 +2197,7 @@ header {
 
 .cr-send {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 9px 18px;
@@ -2227,7 +2227,7 @@ header {
   -webkit-backdrop-filter: blur(10px);
   color: var(--white);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   padding: 10px 24px;
   opacity: 0;
@@ -2255,7 +2255,7 @@ header {
   border: 1px solid rgba(0, 0, 0, .08);
   border-radius: 99px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -2629,7 +2629,7 @@ header {
 
 .zoom-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -2672,7 +2672,7 @@ header {
 
 .zoom-fit {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .12em;
   text-transform: uppercase;
   padding: 5px 12px;
@@ -2701,7 +2701,7 @@ header {
   bottom: 18px;
   right: var(--pad);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -2724,7 +2724,7 @@ header {
 
 .quick-link-pill {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 8px 14px;
@@ -2929,7 +2929,7 @@ header {
 ═══════════════════════════════════════════ */
 .ed-status-tag {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 5px 10px;
