@@ -63,7 +63,7 @@ const PHASES = [
     "name": "Fase 2: Maquetación, Interacciones de Scroll y Responsive",
     "start": "2026-11-09",
     "end": "2026-11-27",
-    "description": "Build de todas las secciones en Gutenberg, al mismo tiempo que sus animaciones de scroll y su versión responsive. Cada sección se maqueta, se anima y se adapta a tablet y móvil antes de pasar a la siguiente.",
+    "description": "Build de todas las secciones en Gutenberg al mismo tiempo que sus animaciones de scroll y su versión responsive. Así, mientras se maqueta, se va probando que todo funcione en desktop, tablet y móvil.",
     "tasks": [
       {
         "id": "2a",
