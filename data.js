@@ -105,7 +105,7 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "16 – 24 de noviembre",
-        "description": "Implementación de los efectos de scroll definidos en el diseño: secciones fijas, apariciones, transiciones, etc. Usando librerías como GSAP (ScrollTrigger), Lenis, Scrollama y Animista."
+        "description": "Implementación de los efectos de scroll definidos en el diseño: secciones fijas, apariciones, transiciones, etc. Usando las librerías GSAP + ScrollTrigger (animaciones ligadas al scroll y secciones fijas) y Lenis (scroll suave)."
       },
       {
         "id": "3b",
