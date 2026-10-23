@@ -131,12 +131,12 @@ function openDock(phase){
       nm.textContent=d.name.replace(/^Deliverable:\s*/i,'');
       itemHdr.appendChild(nm);
       if(d.dueDate){
-        const parsed=/^\d{4}-\d{2}-\d{2}$/.test(d.dueDate)?pd(d.dueDate):new Date(d.dueDate+' 2026');
+        const parsed=/^\d{4}-\d{2}-\d{2}$/.test(d.dueDate)?pd(d.dueDate):new Date(NaN); // solo fechas ISO; cualquier otro texto (ej. TBD) se muestra tal cual
         if(!isNaN(parsed.getTime())){
           const badgeWrap=document.createElement('div'); badgeWrap.style.cssText='flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:3px;'+(hasPdf?'opacity:0.4;':'');
           const badgeLbl=document.createElement('div'); badgeLbl.style.cssText='font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:gray;white-space:nowrap;'; badgeLbl.textContent=hasPdf?'Entregado':'Entrega prevista';
           const badge=document.createElement('div'); badge.className='dock-mc-date'; if(hasPdf)badge.style.textDecoration='line-through';
-          const mo=document.createElement('div'); mo.className='dock-mc-month'; mo.textContent=parsed.toLocaleDateString('en-US',{month:'short'}).toUpperCase();
+          const mo=document.createElement('div'); mo.className='dock-mc-month'; mo.textContent=parsed.toLocaleDateString('es-ES',{month:'short'}).toUpperCase();
           const day=document.createElement('div'); day.className='dock-mc-day'; day.textContent=parsed.getDate();
           badge.appendChild(mo); badge.appendChild(day); badgeWrap.appendChild(badgeLbl); badgeWrap.appendChild(badge); itemHdr.appendChild(badgeWrap);
         } else {
