@@ -26,7 +26,7 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "2 – 4 de noviembre",
-        "description": "Análisis de cada sección y de cada efecto de scroll para definir cómo se construye en Gutenberg (bloques nativos, CSS y JS). Se señalan al cliente los elementos que requieran ajustes antes de empezar."
+        "description": "Análisis de cada sección y de cada efecto de scroll para definir cómo se construye en Gutenberg (bloques nativos, CSS y JS). Reajustar el diseño si es que existen limitaciones de CSS o JS en Gutenberg. Por ejemplo: Gutenberg puede tener problemas con objetos sticky."
       },
       {
         "id": "1c",
