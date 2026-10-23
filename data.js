@@ -1,5 +1,5 @@
 // ── PROJECT DATA (auto-saved) ──────────────────────────────────────────────
-const CLIENT_NAME   = "Nombre del cliente";
+const CLIENT_NAME   = "DDS";
 const LAST_UPDATED  = "2026-10-23";
 const LAUNCH_DATE   = "2026-12-14";
 const HOURLY_RATE   = "60 €/h + IVA";
@@ -9,7 +9,7 @@ const PHASES = [
     "name": "Fase 1: Revisión de Diseños y Planificación Técnica",
     "start": "2026-11-02",
     "end": "2026-11-06",
-    "description": "Recepción de los diseños finales del cliente y revisión técnica de cada sección y animación. Se identifican los puntos complejos de construir en Gutenberg y se prepara la estructura base de la página. Los diseños deben estar aprobados por el cliente antes de entregarse.",
+    "description": "Recepción de los diseños finales de DDS y revisión técnica de cada sección y animación. Se identifican los puntos complejos de construir en Gutenberg y se prepara la estructura base de la página. Los diseños deben estar aprobados por DDS antes de entregarse.",
     "tasks": [
       {
         "id": "1a",
@@ -38,13 +38,13 @@ const PHASES = [
       },
       {
         "id": "1e",
-        "name": "Prototipo y diseños finales (entrega del cliente)",
+        "name": "Prototipo y diseños finales (entrega de DDS)",
         "done": false,
         "status": "todo",
         "dueDate": "TBD",
         "deliverable": true,
         "deliverableType": "link",
-        "description": "Entrega por parte del cliente del prototipo y los diseños finales aprobados (desktop y mobile), con las indicaciones de cada animación."
+        "description": "Entrega por parte de DDS del prototipo y los diseños finales aprobados (desktop y mobile), con las indicaciones de cada animación."
       },
       {
         "id": "1d",
@@ -88,7 +88,7 @@ const PHASES = [
         "status": "todo",
         "dueDate": "13 de noviembre",
         "clientInput": true,
-        "description": "El cliente entrega todos los textos definitivos y las imágenes optimizadas a 72 dpi."
+        "description": "DDS entrega todos los textos definitivos y las imágenes optimizadas a 72 dpi."
       }
     ]
   },
@@ -123,25 +123,25 @@ const PHASES = [
         "dueDate": "TBD",
         "deliverable": true,
         "deliverableType": "link",
-        "description": "Enlace privado a la página en desarrollo con todas las secciones e interacciones implementadas, lista para la revisión del cliente."
+        "description": "Enlace privado a la página en desarrollo con todas las secciones e interacciones implementadas, lista para la revisión de DDS."
       }
     ]
   },
   {
     "id": 4,
-    "name": "Fase 4: Revisión del Cliente y Ajustes",
+    "name": "Fase 4: Revisión de DDS y Ajustes",
     "start": "2026-11-30",
     "end": "2026-12-04",
-    "description": "Revisión de la Beta por parte del cliente y ronda de ajustes. Los cambios sobre el diseño aprobado se consideran solicitudes de cambio y se presupuestan aparte.",
+    "description": "Revisión de la Beta por parte de DDS y ronda de ajustes. Los cambios sobre el diseño aprobado se consideran solicitudes de cambio y se presupuestan aparte.",
     "tasks": [
       {
         "id": "4a",
-        "name": "Feedback consolidado del cliente",
+        "name": "Feedback consolidado de DDS",
         "done": false,
         "status": "todo",
         "dueDate": "1 de diciembre",
         "clientInput": true,
-        "description": "El cliente envía todos los comentarios sobre la Beta en un solo documento o listado, para poder aplicarlos en una única ronda."
+        "description": "DDS envía todos los comentarios sobre la Beta en un solo documento o listado, para poder aplicarlos en una única ronda."
       },
       {
         "id": "4b",
@@ -182,7 +182,7 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "11 de diciembre",
-        "description": "Opcional, a confirmar con el cliente. Sesión para mostrar cómo editar textos e imágenes de la página en Gutenberg sin afectar las animaciones."
+        "description": "Opcional, a confirmar con DDS. Sesión para mostrar cómo editar textos e imágenes de la página en Gutenberg sin afectar las animaciones."
       },
       {
         "id": "5d",
