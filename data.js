@@ -199,7 +199,7 @@ const PHASES = [
 const YOUR_EMAIL    = "camillecunliffe@gmail.com";
 
 // ── CLIENT QUICK-LINKS ────────────────────────────────────────────────────────
-const QUOTATION_URL = "https://camillejcc.github.io/Scrollytelling-DDS/quotation.pdf";
+const QUOTATION_URL = "";
 const MIRO_URL      = "";
 const SHARE_URL     = "";
 
