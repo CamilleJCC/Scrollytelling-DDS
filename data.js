@@ -88,7 +88,7 @@ const PHASES = [
         "status": "todo",
         "dueDate": "13 de noviembre",
         "clientInput": true,
-        "description": "El cliente entrega todos los textos definitivos y las imágenes en alta resolución. El scrollytelling depende del contenido final: si llega tarde, se retrasan las animaciones y el lanzamiento."
+        "description": "El cliente entrega todos los textos definitivos y las imágenes optimizadas a 72 dpi."
       }
     ]
   },
