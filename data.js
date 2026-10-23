@@ -156,7 +156,7 @@ const PHASES = [
     "name": "Fase 4: Testing y Lanzamiento",
     "start": "2026-12-07",
     "end": "2026-12-14",
-    "description": "Pruebas en distintos dispositivos y navegadores, optimización de carga y accesibilidad: animaciones simplificadas para usuarios que tienen activada la opción de reducir movimiento. El 8 de diciembre es festivo. Incluye una garantía técnica de 20 días después del lanzamiento.",
+    "description": "Pruebas en distintos dispositivos y navegadores, optimización de carga y una versión sin animaciones para usuarios con movimiento reducido. El 8 de diciembre es festivo. Incluye una garantía técnica de 20 días después del lanzamiento.",
     "tasks": [
       {
         "id": "5a",
@@ -168,11 +168,11 @@ const PHASES = [
       },
       {
         "id": "5b",
-        "name": "Rendimiento y accesibilidad",
+        "name": "Rendimiento y movimiento reducido",
         "done": false,
         "status": "todo",
         "dueDate": "9 – 10 de diciembre",
-        "description": "Optimización de imágenes y scripts para que la página cargue rápido, y animaciones simplificadas para quienes tienen activada la opción de reducir movimiento en su dispositivo."
+        "description": "Optimización de imágenes y scripts para que la página cargue rápido, y una versión sin animaciones para quienes tienen activada la opción de reducir movimiento en su dispositivo."
       },
       {
         "id": "5c",
