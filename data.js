@@ -36,14 +36,6 @@ const PHASES = [
         "description": "Análisis de cada sección y de cada efecto de scroll para definir cómo se construye en Gutenberg (bloques nativos, CSS y JS). Reajustar el diseño si es que existen limitaciones de CSS o JS en Gutenberg. Por ejemplo: Gutenberg puede tener problemas con objetos sticky."
       },
       {
-        "id": "1c",
-        "name": "Configuración y estructura de la página en WordPress. Instalación de plugins",
-        "done": false,
-        "status": "todo",
-        "dueDate": "4 – 6 de noviembre",
-        "description": "Creación de la página en WordPress y armado de su estructura."
-      },
-      {
         "id": "1e",
         "name": "Prototipo y diseños finales (entrega de DDS)",
         "done": false,
