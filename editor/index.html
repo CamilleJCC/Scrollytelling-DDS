@@ -14,13 +14,13 @@
   padding: 14px var(--pad); display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
 }
 .setup-banner p {
-  font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
   text-transform: uppercase; color: var(--gray-600); flex: 1; min-width: 200px;
 }
 .setup-banner p strong { color: var(--black); }
 .setup-fields { display: flex; gap: 8px; flex-wrap: wrap; }
 .setup-input {
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em;
   padding: 7px 10px; border: 1px solid var(--gray-200); background: var(--white);
   color: var(--black); width: 190px; outline: none;
   transition: border-color .15s, box-shadow .15s; border-radius: var(--r-sm);
@@ -30,7 +30,7 @@
 
 /* ── SAVE STATUS ── */
 .save-status {
-  font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
   text-transform: uppercase; color: var(--gray-400); display: flex; align-items: center; gap: 6px;
 }
 .save-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gray-200); transition: background .3s; }
@@ -38,7 +38,7 @@
 .save-dot.saved  { background: #16a34a; }
 .save-dot.error  { background: var(--red); }
 .draft-badge {
-  font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
   text-transform: uppercase; background: #f59e0b; color: #fff;
   padding: 3px 8px; border-radius: 4px; display: none;
 }
@@ -47,7 +47,7 @@
 .editor-meetings { padding: 32px var(--pad) 64px; }
 .em-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 24px; }
 .em-title  { font-size: 18px; font-weight: 300; letter-spacing: -.01em; }
-.em-hint   { font-family: var(--font-mono); font-size: 9px; color: var(--gray-400); letter-spacing: .08em; margin-top: 4px; }
+.em-hint   { font-family: var(--font-mono); font-size: 11px; color: var(--gray-400); letter-spacing: .08em; margin-top: 4px; }
 .em-del-btn {
   background: rgba(0,0,0,.04); border: none; cursor: pointer; font-size: 18px; border-radius: 50%;
   color: var(--gray-400); padding: 0; width: 28px; height: 28px;
@@ -77,14 +77,14 @@
   display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-shrink: 0;
 }
 #edDockClose { position: absolute; top: 16px; right: 16px; }
-.ed-dock-num   { font-family: var(--font-mono); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 6px; }
+.ed-dock-num   { font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 6px; }
 .ed-dock-title { font-size: 18px; font-weight: 300; letter-spacing: -.01em; }
 .ed-dock-body  { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 24px 28px 48px; }
 .ed-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
 .ed-dates-row  { display: flex; gap: 12px; margin-bottom: 16px; }
 .ed-dates-row .ed-field { flex: 1; margin-bottom: 0; }
 .ed-section-title {
-  font-family: var(--font-mono); font-size: 9px; letter-spacing: .14em;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em;
   text-transform: uppercase; color: var(--gray-400); padding: 20px 0 10px;
 }
 .ed-task-list { display: flex; flex-direction: column; }
@@ -132,7 +132,7 @@
 }
 .em-meeting-header:hover { background: rgba(0,0,0,.025); }
 .em-meeting-name  { font-size: 14px; font-weight: 400; }
-.em-meeting-meta  { font-family: var(--font-mono); font-size: 9px; color: var(--gray-400); margin-top: 3px; }
+.em-meeting-meta  { font-family: var(--font-mono); font-size: 11px; color: var(--gray-400); margin-top: 3px; }
 .em-meeting-toggle { font-size: 9px; color: var(--gray-400); transition: transform .2s; }
 .em-meeting.open .em-meeting-toggle { transform: rotate(180deg); }
 
@@ -142,7 +142,7 @@
 .em-field { display: flex; flex-direction: column; gap: 6px; }
 .em-field.full  { grid-column: 1 / -1; }
 .em-label {
-  font-family: var(--font-mono); font-size: 8px; letter-spacing: .14em;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em;
   text-transform: uppercase; color: var(--gray-600);
 }
 .em-input, .em-textarea {
@@ -154,7 +154,7 @@
 .em-textarea { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; min-height: 64px; resize: vertical; }
 .em-dur { display: flex; align-items: center; gap: 8px; }
 .em-dur .em-input { flex: 1; }
-.em-dur span { font-family: var(--font-mono); font-size: 10px; color: var(--gray-600); }
+.em-dur span { font-family: var(--font-mono); font-size: 11px; color: var(--gray-600); }
 
 /* ── ACTION REQUIRED FLAG ── */
 .ed-task-flag { background: none; border: 1px solid var(--gray-200); border-radius: var(--r-sm); cursor: pointer; font-size: 12px; color: var(--gray-400); padding: 0; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; transition: all .12s; flex-shrink: 0; }
@@ -162,7 +162,7 @@
 .ed-task-flag.active { border-color: #f59e0b; background: #fef3c7; color: #d97706; }
 
 /* ── LINK STATUS (settings view) ── */
-.link-status { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-mono); font-size: 8px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-400); }
+.link-status { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-400); }
 .link-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gray-300); flex-shrink: 0; }
 .link-status-dot.set { background: #16a34a; }
 .links-section { padding: 32px var(--pad) 64px; max-width: 560px; }
@@ -308,7 +308,7 @@ select.em-input option, select.ed-status-tag option { background: #1e1e1c; color
 <div id="edLinksView" style="display:none">
   <div class="links-section">
     <div style="font-size:18px;font-weight:300;letter-spacing:-.01em;margin-bottom:5px;">Enlaces del proyecto</div>
-    <div style="font-family:var(--font-mono);font-size:9px;color:var(--gray-400);letter-spacing:.08em;margin-bottom:32px;">Se guardan en data.js al pulsar Guardar</div>
+    <div style="font-family:var(--font-mono);font-size:11px;color:var(--gray-400);letter-spacing:.08em;margin-bottom:32px;">Se guardan en data.js al pulsar Guardar</div>
 
     <div class="links-field">
       <div class="links-field-header">

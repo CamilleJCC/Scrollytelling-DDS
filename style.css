@@ -92,7 +92,7 @@ header {
 
 .header-left h1 {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -132,7 +132,7 @@ header {
   border: 1px solid rgba(0, 0, 0, .08);
   border-radius: 99px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -174,7 +174,7 @@ header {
 
 .header-launch-num {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
   color: var(--gray-600);
   line-height: 1;
@@ -182,7 +182,7 @@ header {
 
 .header-launch-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -207,7 +207,7 @@ header {
 /* ── SHARED BUTTON ─────────────────────────────────────────────────────────── */
 .btn {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
   padding: 9px 20px;
@@ -323,7 +323,7 @@ header {
 /* ── STATUS PILL (phase-level) ─────────────────────────────────────────────── */
 .status-pill {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 11px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 3px 8px;
@@ -436,7 +436,7 @@ header {
 
 .week-cell {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--gray-400);
   width: var(--week-w);
   text-align: center;
@@ -583,7 +583,7 @@ header {
 
 .phase-num-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -627,7 +627,7 @@ header {
 
 .phase-pct {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--gray-400);
 }
 
@@ -774,7 +774,7 @@ header {
   -webkit-backdrop-filter: blur(8px);
   color: var(--white);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .07em;
   padding: 6px 12px;
   pointer-events: none;
@@ -984,7 +984,7 @@ header {
 
 .ms-dates {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 11px;
   color: var(--gray-500);
   flex-shrink: 0;
   text-align: right;
@@ -1226,7 +1226,7 @@ header {
 
 .mli-btn {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 5px 10px;
@@ -1338,7 +1338,7 @@ header {
 
 .meeting-card-time {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--gray-600);
   letter-spacing: .04em;
   margin-bottom: 12px;
@@ -1398,7 +1398,7 @@ header {
   gap: 14px;
   margin: 12px 0 36px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -1511,7 +1511,7 @@ header {
 
 .summary-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -1682,7 +1682,7 @@ header {
 
 .dock-progress-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -1780,7 +1780,7 @@ header {
 /* replaced by .task-pill */
 .task-read-btn {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 3px 9px;
@@ -1817,7 +1817,7 @@ header {
 
 .task-action-badge {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .08em;
   text-transform: uppercase;
   padding: 3px 9px;
@@ -1831,7 +1831,7 @@ header {
 
 .task-due-date {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 11px;
   letter-spacing: -.01em;
   color: var(--black);
   font-weight: 500;
@@ -1875,7 +1875,7 @@ header {
 
 .dock-deliverable-due {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -1897,7 +1897,7 @@ header {
 
 .dock-deliverable-pending {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -1922,7 +1922,7 @@ header {
 
 .task-feedback-btn {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 3px 9px;
@@ -2227,7 +2227,7 @@ header {
   -webkit-backdrop-filter: blur(10px);
   color: var(--white);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .1em;
   padding: 10px 24px;
   opacity: 0;
@@ -2255,7 +2255,7 @@ header {
   border: 1px solid rgba(0, 0, 0, .08);
   border-radius: 99px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--gray-600);
@@ -2701,7 +2701,7 @@ header {
   bottom: 18px;
   right: var(--pad);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gray-400);
@@ -2929,7 +2929,7 @@ header {
 ═══════════════════════════════════════════ */
 .ed-status-tag {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 5px 10px;
