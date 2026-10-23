@@ -105,7 +105,7 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "16 – 24 de noviembre",
-        "description": "Implementación de los efectos de scroll definidos en el diseño: secciones fijas, apariciones, transiciones y animaciones ligadas al avance de la lectura."
+        "description": "Implementación de los efectos de scroll definidos en el diseño: secciones fijas, apariciones, transiciones, etc. Usando librerías como GSAP (ScrollTrigger), Lenis, Scrollama y Animista."
       },
       {
         "id": "3b",
