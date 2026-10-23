@@ -1875,10 +1875,12 @@ header {
 
 .dock-deliverable-due {
   font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: -.01em;
-  color: var(--black);
-  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .dock-deliverable-desc {
