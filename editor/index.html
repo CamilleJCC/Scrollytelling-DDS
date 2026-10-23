@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planner — Scrollytelling · Editor</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<style>
+/* ── SETUP BANNER ── */
+.setup-banner {
+  background: var(--gray-50); border-bottom: 1px solid rgba(0,0,0,.08);
+  padding: 14px var(--pad); display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.setup-banner p {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gray-600); flex: 1; min-width: 200px;
+}
+.setup-banner p strong { color: var(--black); }
+.setup-fields { display: flex; gap: 8px; flex-wrap: wrap; }
+.setup-input {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em;
+  padding: 7px 10px; border: 1px solid var(--gray-200); background: var(--white);
+  color: var(--black); width: 190px; outline: none;
+  transition: border-color .15s, box-shadow .15s; border-radius: var(--r-sm);
+}
+.setup-input:focus { border-color: var(--black); box-shadow: 0 0 0 3px rgba(0,0,0,.06); }
+.setup-input::placeholder { color: var(--gray-400); }
+
+/* ── SAVE STATUS ── */
+.save-status {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gray-400); display: flex; align-items: center; gap: 6px;
+}
+.save-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gray-200); transition: background .3s; }
+.save-dot.saving { background: #f59e0b; }
+.save-dot.saved  { background: #16a34a; }
+.save-dot.error  { background: var(--red); }
+.draft-badge {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em;
+  text-transform: uppercase; background: #f59e0b; color: #fff;
+  padding: 3px 8px; border-radius: 4px; display: none;
+}
+
+/* ── EDITOR MEETINGS ── */
+.editor-meetings { padding: 32px var(--pad) 64px; }
+.em-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 24px; }
+.em-title  { font-size: 18px; font-weight: 300; letter-spacing: -.01em; }
+.em-hint   { font-family: var(--font-mono); font-size: 9px; color: var(--gray-400); letter-spacing: .08em; margin-top: 4px; }
+.em-del-btn {
+  background: rgba(0,0,0,.04); border: none; cursor: pointer; font-size: 18px; border-radius: 50%;
+  color: var(--gray-400); padding: 0; width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1; transition: background .12s, color .12s; flex-shrink: 0;
+}
+.em-del-btn:hover { background: rgba(217,48,37,.1); color: #d93025; }
+
+/* ── PHASE EDITOR DOCK ── */
+.ed-dock-overlay {
+  position: fixed; inset: 0; z-index: 400; pointer-events: none;
+}
+.ed-dock-overlay.open { pointer-events: all; }
+.ed-dock {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 50%;
+  background: rgba(252,252,250,.92);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-left: 1px solid rgba(255,255,255,.6);
+  box-shadow: var(--sh-lg);
+  display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform .3s cubic-bezier(.4,0,.2,1); z-index: 401;
+}
+.ed-dock-overlay.open .ed-dock { transform: translateX(0); }
+.ed-dock-header {
+  padding: 22px 52px 22px 28px; border-bottom: 1px solid rgba(0,0,0,.08);
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-shrink: 0;
+}
+#edDockClose { position: absolute; top: 16px; right: 16px; }
+.ed-dock-num   { font-family: var(--font-mono); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 6px; }
+.ed-dock-title { font-size: 18px; font-weight: 300; letter-spacing: -.01em; }
+.ed-dock-body  { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 24px 28px 48px; }
+.ed-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.ed-dates-row  { display: flex; gap: 12px; margin-bottom: 16px; }
+.ed-dates-row .ed-field { flex: 1; margin-bottom: 0; }
+.ed-section-title {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--gray-400); padding: 20px 0 10px;
+}
+.ed-task-list { display: flex; flex-direction: column; }
+.ed-task-group { border-bottom: 1px solid var(--gray-100); padding-bottom: 10px; margin-bottom: 2px; }
+.ed-task-group:last-child { border-bottom: none; margin-bottom: 0; }
+.ed-task-row  { display: flex; align-items: center; gap: 8px; padding: 8px 0 4px; }
+.ed-task-desc { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; min-height: 40px; resize: vertical; margin-left: 34px; width: calc(100% - 34px); }
+.ed-task-status-btn {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  border: 1.5px solid var(--gray-400); background: transparent;
+  cursor: pointer; transition: all .15s; position: relative;
+}
+.ed-task-status-btn[data-status="in-progress"] { border-color: var(--black); background: linear-gradient(90deg, var(--black) 50%, transparent 50%); }
+.ed-task-status-btn[data-status="done"]        { border-color: var(--black); background: var(--black); }
+.ed-task-status-btn[data-status="done"]::after {
+  content: ''; position: absolute; left: 4px; top: 1px; width: 5px; height: 9px;
+  border: 1.5px solid var(--white); border-left: none; border-top: none; transform: rotate(45deg);
+}
+.ed-task-del {
+  background: rgba(0,0,0,.04); border: none; cursor: pointer; font-size: 16px; border-radius: 50%;
+  color: var(--gray-400); padding: 0; width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .12s, color .12s; flex-shrink: 0;
+}
+.ed-task-del:hover { background: rgba(217,48,37,.1); color: #d93025; }
+@media (max-width:640px) {
+  .ed-dock {
+    width: 100%; border-left: none; border-top: 1px solid rgba(255,255,255,.5);
+    top: auto; height: 92vh; transform: translateY(100%);
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+  }
+  .ed-dock-overlay.open .ed-dock { transform: translateY(0); }
+}
+
+.em-list { display: flex; flex-direction: column; gap: 10px; }
+
+.em-meeting {
+  border: 1px solid var(--gray-200); background: var(--white);
+  border-radius: var(--r-md); box-shadow: var(--sh-xs); overflow: hidden;
+}
+.em-meeting-header {
+  display: grid; grid-template-columns: 1fr auto;
+  padding: 16px 20px; cursor: pointer; align-items: center;
+  transition: background .1s;
+}
+.em-meeting-header:hover { background: rgba(0,0,0,.025); }
+.em-meeting-name  { font-size: 14px; font-weight: 400; }
+.em-meeting-meta  { font-family: var(--font-mono); font-size: 9px; color: var(--gray-400); margin-top: 3px; }
+.em-meeting-toggle { font-size: 9px; color: var(--gray-400); transition: transform .2s; }
+.em-meeting.open .em-meeting-toggle { transform: rotate(180deg); }
+
+.em-meeting-body { display: none; padding: 0 20px 20px; border-top: 1px solid var(--gray-100); }
+.em-meeting.open .em-meeting-body { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; padding-top: 16px; }
+
+.em-field { display: flex; flex-direction: column; gap: 6px; }
+.em-field.full  { grid-column: 1 / -1; }
+.em-label {
+  font-family: var(--font-mono); font-size: 8px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--gray-600);
+}
+.em-input, .em-textarea {
+  font-family: var(--font-sans); font-size: 13px; padding: 8px 10px;
+  border: 1px solid var(--gray-200); background: rgba(255,255,255,.7); color: var(--black);
+  outline: none; transition: border-color .15s, box-shadow .15s; border-radius: var(--r-sm);
+}
+.em-input:focus, .em-textarea:focus { border-color: var(--black); box-shadow: 0 0 0 3px rgba(0,0,0,.06); }
+.em-textarea { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; min-height: 64px; resize: vertical; }
+.em-dur { display: flex; align-items: center; gap: 8px; }
+.em-dur .em-input { flex: 1; }
+.em-dur span { font-family: var(--font-mono); font-size: 10px; color: var(--gray-600); }
+
+/* ── ACTION REQUIRED FLAG ── */
+.ed-task-flag { background: none; border: 1px solid var(--gray-200); border-radius: var(--r-sm); cursor: pointer; font-size: 12px; color: var(--gray-400); padding: 0; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; transition: all .12s; flex-shrink: 0; }
+.ed-task-flag:hover { border-color: #f59e0b; color: #f59e0b; }
+.ed-task-flag.active { border-color: #f59e0b; background: #fef3c7; color: #d97706; }
+
+/* ── LINK STATUS (settings view) ── */
+.link-status { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-mono); font-size: 8px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-400); }
+.link-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gray-300); flex-shrink: 0; }
+.link-status-dot.set { background: #16a34a; }
+.links-section { padding: 32px var(--pad) 64px; max-width: 560px; }
+.links-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+.links-field-header { display: flex; flex-direction: row; align-items: flex-start; gap: 19px; width: 100%; flex-shrink: 0; margin-bottom: 0; }
+
+/* ── MEETING CHIPS ── */
+.ed-meeting-chip { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--r-sm); margin-bottom: 6px; }
+.ed-meeting-chip-label { font-size: 12px; color: var(--gray-700); flex: 1; min-width: 0; }
+.ed-meeting-chip-rm { background: none; border: none; cursor: pointer; font-size: 16px; color: var(--gray-400); padding: 0; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background .12s, color .12s; flex-shrink: 0; }
+.ed-meeting-chip-rm:hover { background: rgba(217,48,37,.1); color: #d93025; }
+
+/* ── EDITOR ALWAYS DARK ────────────────────────────────────────────────────── */
+:root {
+  --black:    #deded9;
+  --white:    #1e1e1c;
+  --bg:       #111110;
+  --gray-50:  #191918;
+  --gray-100: #252523;
+  --gray-200: #353533;
+  --gray-300: #4c4c49;
+  --gray-400: #88887f;
+  --gray-600: #a8a8a0;
+  --sh-xs: 0 1px 2px rgba(0,0,0,.5);
+  --sh-sm: 0 1px 4px rgba(0,0,0,.6), 0 4px 16px rgba(0,0,0,.5);
+  --sh-md: 0 4px 24px rgba(0,0,0,.7), 0 1px 4px rgba(0,0,0,.5);
+  --sh-lg: 0 12px 48px rgba(0,0,0,.8), 0 2px 8px rgba(0,0,0,.6);
+}
+/* hardcoded rgba overrides */
+header { background: rgba(17,17,16,.92) !important; border-bottom-color: rgba(255,255,255,.07) !important; }
+div[style*="border-bottom:1px solid rgba(0,0,0,.08)"] { border-bottom-color: rgba(255,255,255,.07) !important; }
+.view-tabs { background: rgba(255,255,255,.07) !important; }
+.tab:hover  { background: rgba(255,255,255,.07) !important; color: var(--black) !important; }
+.tab.active { background: rgba(255,255,255,.13) !important; }
+.tab.client-tab, .tab.client-tab:hover { background: rgba(255,255,255,.05) !important; }
+.btn { border-color: rgba(255,255,255,.13) !important; }
+.em-input, .em-textarea, .setup-input, select.em-input, select.ed-status-tag {
+  background: rgba(255,255,255,.05) !important;
+  border-color: var(--gray-200) !important;
+  color: var(--black) !important;
+}
+select.em-input option, select.ed-status-tag option { background: #1e1e1c; color: var(--black); }
+.em-input:focus, .em-textarea:focus, .setup-input:focus { border-color: var(--gray-400) !important; }
+.em-meeting { border-color: var(--gray-200) !important; }
+.em-meeting-header:hover { background: rgba(255,255,255,.04) !important; }
+.phase-row:hover, .phase-row.expanded { background: rgba(255,255,255,.03) !important; }
+.subtask-drawer { background: rgba(255,255,255,.02) !important; }
+.gantt-bar { border-color: rgba(255,255,255,.12) !important; }
+.gantt-bar.todo { background: var(--gray-200) !important; }
+.timeline-header { border-bottom-color: rgba(255,255,255,.08) !important; }
+.ed-dock {
+  background: rgba(20,20,18,.96) !important;
+  border-left-color: rgba(255,255,255,.07) !important;
+}
+.ed-dock-header { border-bottom-color: rgba(255,255,255,.07) !important; }
+.ed-task-group { border-bottom-color: var(--gray-100) !important; }
+.legend { border-bottom-color: var(--gray-200) !important; }
+.legend-swatch { border-color: rgba(255,255,255,.12) !important; }
+.status-pill.todo        { color: #60a5fa; background: rgba(59,130,246,.15); }
+.status-pill.in-progress { color: #4ade80; background: rgba(34,197,94,.15); }
+.task-pill { background: var(--gray-100) !important; border-color: rgba(255,255,255,.08) !important; }
+.task-pill.in-progress { background: rgba(234,179,8,.2) !important; color: #fbbf24 !important; border-color: rgba(234,179,8,.3) !important; }
+.task-pill.in-review   { background: rgba(59,130,246,.18) !important; color: #93c5fd !important; border-color: rgba(59,130,246,.3) !important; }
+.task-pill.approved    { background: rgba(34,197,94,.18) !important; color: #86efac !important; border-color: rgba(34,197,94,.3) !important; }
+.save-status { color: var(--gray-400) !important; }
+@media (max-width: 640px) {
+  header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .header-right { width: 100%; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="private-bar">⬛ Privado — Vista de Editor — No Compartir Esta URL</div>
+
+<header>
+  <div class="header-left">
+    <h1>Editor del Proyecto — Privado</h1>
+    <h2>Cronograma de Desarrollo</h2>
+  </div>
+  <div class="header-right">
+    <div class="save-status" id="saveStatus">
+      <div class="save-dot" id="saveDot"></div>
+      <span id="saveText">Sin conexión</span>
+    </div>
+    <span class="draft-badge" id="draftBadge">Borrador</span>
+    <button class="btn" id="previewBtn" onclick="window.open('../index.html','_blank','noopener')" title="Abrir vista del cliente">Vista previa</button>
+    <button class="btn" id="saveBtn">Guardar en GitHub</button>
+  </div>
+</header>
+
+<!-- GitHub setup -->
+<div class="setup-banner" id="setupBanner">
+  <p>Conecta con GitHub para <strong>guardar automáticamente</strong> los cambios directamente en tu repositorio. Las credenciales se guardan en el navegador.</p>
+  <div class="setup-fields">
+    <input class="setup-input" id="ghUser"  placeholder="Usuario de GitHub" autocomplete="off" spellcheck="false">
+    <input class="setup-input" id="ghRepo"  placeholder="Nombre del repositorio" autocomplete="off" spellcheck="false">
+    <input class="setup-input" id="ghToken" placeholder="Token de acceso personal" type="password" autocomplete="off">
+    <button class="btn" id="connectBtn">Conectar</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div style="padding:12px var(--pad);border-bottom:1px solid rgba(0,0,0,.08);background:var(--bg);margin-top:36px;">
+  <div class="view-tabs" style="width:fit-content;">
+    <button class="tab active" id="edTabGantt">Cronograma<span class="tab-draft-dot" id="tabDotGantt"></span></button>
+    <button class="tab"        id="edTabMeetings">Reuniones<span class="tab-draft-dot" id="tabDotMeetings"></span></button>
+    <button class="tab"        id="edTabLinks">Enlaces<span class="tab-draft-dot" id="tabDotLinks"></span></button>
+  </div>
+</div>
+
+<div class="legend" id="edLegend">
+  <div class="legend-item"><div class="legend-swatch"></div> Pendiente</div>
+  <div class="legend-item"><div class="legend-swatch inprogress"></div> En progreso</div>
+  <div class="legend-item"><div class="legend-swatch done"></div> Completado</div>
+  <span class="legend-hint">Expande las fases · Marca tareas para actualizar el progreso</span>
+</div>
+
+<!-- gantt -->
+<div id="edGanttView">
+  <div id="edGanttToolbar" style="padding:8px var(--pad);border-bottom:1px solid rgba(0,0,0,.06);display:flex;justify-content:flex-end;align-items:center;gap:10px;">
+    <button class="btn" id="ganttSaveDraftBtn">Guardar borrador</button>
+  </div>
+  <div class="gantt-outer"><div class="chart-wrap" id="chartWrap"></div></div>
+  <div class="mobile-schedule" id="mobileSchedule"></div>
+</div>
+
+<!-- meetings editor -->
+<div id="edMeetingsView" style="display:none">
+  <div class="editor-meetings">
+    <div class="em-header">
+      <div>
+        <div class="em-title">Reuniones</div>
+        <div class="em-hint">Edita los detalles aquí · Guarda en GitHub para publicar los cambios</div>
+      </div>
+      <button class="btn" id="addMeetingBtn">+ Añadir reunión</button>
+    </div>
+    <div class="em-list" id="emList"></div>
+  </div>
+</div>
+
+<!-- LINKS SETTINGS VIEW -->
+<div id="edLinksView" style="display:none">
+  <div class="links-section">
+    <div style="font-size:18px;font-weight:300;letter-spacing:-.01em;margin-bottom:5px;">Enlaces del proyecto</div>
+    <div style="font-family:var(--font-mono);font-size:9px;color:var(--gray-400);letter-spacing:.08em;margin-bottom:32px;">Se guardan en data.js al pulsar Guardar</div>
+
+    <div class="links-field">
+      <div class="links-field-header">
+        <label class="em-label">PDF de Presupuesto</label>
+        <span class="link-status"><span class="link-status-dot set" id="quotStatusDot"></span><span id="quotStatusText">Configurado</span></span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:start;flex-direction:column;">
+        <div style="display:flex;flex-direction:row;align-items:center;">
+          <input id="quotUrlInput" class="em-input" type="url" placeholder="Pega la URL o sube el PDF →" style="flex:1 1 0%;opacity:0.45;" disabled="">
+          <button class="ed-meeting-chip-rm" id="quotClearBtn" title="Eliminar" style="display:flex;">×</button>
+        </div>
+        <button class="btn" id="quotUploadBtn" style="flex-shrink:0;padding:8px 16px;">Reemplazar PDF</button>
+        <input id="quotFileInput" type="file" accept=".pdf,application/pdf" style="display:none">
+      </div>
+    </div>
+
+    <div class="links-field">
+      <div class="links-field-header">
+        <label class="em-label">Diseños (Figma)</label>
+        <span class="link-status"><span class="link-status-dot" id="laboisStatusDot"></span><span id="laboisStatusText"></span></span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:start;flex-direction:column;">
+        <input id="laboisUrlInput" class="em-input" type="url" placeholder="https://… (enlace a los diseños del cliente)" style="width:100%">
+      </div>
+    </div>
+
+    <div class="links-field">
+      <div class="links-field-header">
+        <label class="em-label">Ver prototipo</label>
+        <span class="link-status"><span class="link-status-dot" id="protoStatusDot"></span><span id="protoStatusText"></span></span>
+      </div>
+      <input id="protoUrlInput" class="em-input" type="url" placeholder="https://…" style="width:100%">
+    </div>
+  </div>
+</div>
+
+<div class="summary" id="summary"></div>
+<div class="tooltip" id="tooltip"></div>
+<div class="toast"   id="toast"></div>
+<div class="site-footer">© Camille Jackson</div>
+
+<!-- PHASE EDITOR DOCK -->
+<div class="ed-dock-overlay" id="edDockOverlay">
+  <div class="ed-dock" id="edDock">
+    <div class="ed-dock-header">
+      <div>
+        <div class="ed-dock-num"   id="edDockNum"></div>
+        <div class="ed-dock-title" id="edDockTitle"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button class="btn" id="edDockSaveBtn" style="padding:6px 14px;font-size:11px;display:flex;align-items:center;gap:6px;">Guardar borrador<span class="tab-draft-dot" id="dockDraftDot"></span></button>
+        <button class="ed-task-del" id="edDockDelPhase" title="Eliminar fase" style="width:30px;height:30px;"></button>
+        <button class="dock-close" id="edDockClose">✕</button>
+      </div>
+    </div>
+    <div class="ed-dock-body" id="edDockBody"></div>
+  </div>
+</div>
+
+<script src="../data.js"></script>
+<script src="../utils.js"></script>
+<script>
+  // ── STATE ──────────────────────────────────────────────────────────────────
+  const phases   = PHASES.map(p=>({...p,tasks:p.tasks.map(t=>({...t})),expanded:false}));
+  const meetings = MEETINGS.map(m=>({...m}));
+  let editorQuotUrl   = typeof QUOTATION_URL!=='undefined' ? QUOTATION_URL  : '';
+  let editorLaboisUrl = typeof MIRO_URL      !=='undefined' ? MIRO_URL       : '';
+  let editorShareUrl  = typeof SHARE_URL     !=='undefined' ? SHARE_URL      : '';
+
+  // ── RESTORE LOCAL DRAFT ──────────────────────────────────────────────────
+  const DRAFT_KEY = 'pp_draft';
+  let _draftRestored = false;
+  (function(){
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      const snap = JSON.parse(raw);
+      if (!snap || !snap.phases) return;
+      phases.length = 0;
+      snap.phases.forEach(p => phases.push(p));
+      meetings.length = 0;
+      (snap.meetings||[]).forEach(m => meetings.push(m));
+      editorQuotUrl   = snap.quotUrl   !== undefined ? snap.quotUrl   : editorQuotUrl;
+      editorLaboisUrl = snap.laboisUrl !== undefined ? snap.laboisUrl : editorLaboisUrl;
+      editorShareUrl  = snap.shareUrl  !== undefined ? snap.shareUrl  : editorShareUrl;
+      _draftRestored = true;
+    } catch(e) {}
+  })();
+
+  const TRASH_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>';
+
+  // ── PHASE EDITOR DOCK ──────────────────────────────────────────────────────
+  function openPhaseEditor(phase, idx){
+    document.getElementById('edDockNum').textContent   = 'Fase 0'+(idx+1);
+    document.getElementById('edDockTitle').textContent = phase.name.replace(/^Fase \d+:\s*/i,'').replace(/^Phase \d+:\s*/i,'');
+    const body = document.getElementById('edDockBody'); body.innerHTML = '';
+
+    const delPhaseBtn = document.getElementById('edDockDelPhase');
+    delPhaseBtn.innerHTML = TRASH_SVG;
+    delPhaseBtn.onclick = () => {
+      if (!confirm('¿Eliminar "'+phase.name+'"?')) return;
+      phases.splice(idx, 1);
+      document.getElementById('edDockOverlay').classList.remove('open');
+      renderGantt();
+    };
+
+    function ef(label, el){
+      const w=document.createElement('div'); w.className='ed-field';
+      const l=document.createElement('label'); l.className='em-label'; l.textContent=label;
+      w.appendChild(l); w.appendChild(el); body.appendChild(w);
+    }
+
+    // Nombre
+    const nameInp=document.createElement('input'); nameInp.className='em-input'; nameInp.type='text';
+    nameInp.value=phase.name.replace(/^Fase \d+:\s*/i,'').replace(/^Phase \d+:\s*/i,'');
+    nameInp.addEventListener('input',()=>{
+      phase.name='Fase '+(idx+1)+': '+nameInp.value;
+      document.getElementById('edDockTitle').textContent=nameInp.value;
+      buildGantt(phases,{editable:true,onPhaseClick:openPhaseEditor});
+    });
+    ef('Nombre de la fase', nameInp);
+
+    // Descripción de fase
+    const descInp=document.createElement('textarea'); descInp.className='em-textarea'; descInp.style.minHeight='64px';
+    descInp.value=phase.description||'';
+    descInp.placeholder='Descripción de la fase visible en el panel lateral…';
+    descInp.addEventListener('input',()=>{ phase.description=descInp.value||undefined; });
+    ef('Descripción de la fase', descInp);
+
+    // Fechas
+    const dateRow=document.createElement('div'); dateRow.className='ed-dates-row'; body.appendChild(dateRow);
+    function dateField(label, key){
+      const w=document.createElement('div'); w.className='ed-field'; w.style.flex='1';
+      const l=document.createElement('label'); l.className='em-label'; l.textContent=label; w.appendChild(l);
+      const inp=document.createElement('input'); inp.className='em-input'; inp.type='date'; inp.value=phase[key];
+      inp.addEventListener('input',()=>{ phase[key]=inp.value; buildGantt(phases,{editable:true,onPhaseClick:openPhaseEditor}); });
+      w.appendChild(inp); dateRow.appendChild(w);
+    }
+    dateField('Fecha de inicio','start');
+    dateField('Fecha de fin','end');
+
+    // Tareas
+    const tasksLabel=document.createElement('div'); tasksLabel.className='ed-section-title'; tasksLabel.textContent='Tareas'; body.appendChild(tasksLabel);
+    const taskListEl=document.createElement('div'); taskListEl.className='ed-task-list'; body.appendChild(taskListEl);
+
+    const STATUS_OPTS=[
+      {v:'todo',       l:'Pendiente'},
+      {v:'in-progress',l:'En progreso'},
+      {v:'in-review',  l:'En revisión'},
+      {v:'approved',   l:'Aprobado'},
+    ];
+
+    function renderTaskList(){
+      taskListEl.innerHTML='';
+      phase.tasks.forEach((t,ti)=>{
+        if(t.deliverable) return;
+        const group=document.createElement('div'); group.className='ed-task-group';
+        const row=document.createElement('div'); row.className='ed-task-row';
+        const curStatus=t.status||(t.done?'approved':t.inProgress?'in-progress':'todo');
+        const sel=document.createElement('select'); sel.className='ed-status-tag'; sel.dataset.status=curStatus;
+        STATUS_OPTS.forEach(({v,l})=>{ const o=document.createElement('option'); o.value=v; o.textContent=l; if(v===curStatus)o.selected=true; sel.appendChild(o); });
+        sel.addEventListener('change',()=>{ sel.dataset.status=sel.value; t.status=sel.value; t.done=sel.value==='approved'; t.inProgress=sel.value==='in-progress'; buildGantt(phases,{editable:true,onPhaseClick:openPhaseEditor,onAddPhase:addPhase}); renderSummary(phases); });
+        const ni=document.createElement('input'); ni.className='em-input'; ni.type='text'; ni.value=t.name; ni.style.flex='1';
+        ni.addEventListener('input',()=>{ t.name=ni.value; });
+        const flagBtn=document.createElement('button'); flagBtn.className='ed-task-flag'+(t.clientInput?' active':''); flagBtn.title='Requiere acción del cliente'; flagBtn.textContent='⚑';
+        flagBtn.addEventListener('click',()=>{ t.clientInput=!t.clientInput; flagBtn.classList.toggle('active',!!t.clientInput); });
+        const db=document.createElement('button'); db.className='ed-task-del'; db.innerHTML=TRASH_SVG;
+        db.addEventListener('click',()=>{ phase.tasks.splice(ti,1); buildGantt(phases,{editable:true,onPhaseClick:openPhaseEditor,onAddPhase:addPhase}); renderSummary(phases); renderTaskList(); });
+        row.appendChild(ni); row.appendChild(sel); row.appendChild(flagBtn); row.appendChild(db);
+        group.appendChild(row);
+        const ta=document.createElement('textarea'); ta.className='em-textarea ed-task-desc';
+        ta.placeholder='Añade una descripción o nota para el cliente…';
+        ta.value=t.description||'';
+        ta.addEventListener('input',()=>{ t.description=ta.value||undefined; });
+        group.appendChild(ta);
+        taskListEl.appendChild(group);
+      });
+      const addRow=document.createElement('div'); addRow.style.paddingTop='14px';
+      const addBtn=document.createElement('button'); addBtn.className='btn'; addBtn.textContent='+ Añadir tarea'; addBtn.style.width='100%';
+      addBtn.addEventListener('click',()=>{ phase.tasks.push({id:'t'+Date.now(),name:'Nueva tarea',done:false,inProgress:false}); buildGantt(phases,{editable:true,onPhaseClick:openPhaseEditor}); renderSummary(phases); renderTaskList(); });
+      addRow.appendChild(addBtn); taskListEl.appendChild(addRow);
+    }
+    renderTaskList();
+
+    // ── ENTREGABLES ──────────────────────────────────────────────────────────
+    const delivSecTitle=document.createElement('div'); delivSecTitle.className='ed-section-title'; delivSecTitle.textContent='Entregables'; body.appendChild(delivSecTitle);
+    const delivListEl=document.createElement('div'); delivListEl.className='ed-task-list'; body.appendChild(delivListEl);
+
+    async function uploadDeliverablePdf(d, onSuccess){
+      if(!isConnected()){showToast('Conecta con GitHub primero');return;}
+      const fileInp=document.createElement('input'); fileInp.type='file'; fileInp.accept='.pdf,application/pdf';
+      fileInp.addEventListener('change',async(e)=>{
+        const file=e.target.files[0]; if(!file) return;
+        setSaveState('saving','Subiendo PDF…');
+        try{
+          const buf=await file.arrayBuffer();
+          let bin=''; const bytes=new Uint8Array(buf); for(let i=0;i<bytes.length;i++) bin+=String.fromCharCode(bytes[i]);
+          const b64=btoa(bin);
+          const safeName='deliverable-'+d.id+'.pdf';
+          const apiUrl=`https://api.github.com/repos/${ghUser}/${ghRepo}/contents/${safeName}`;
+          const hdrs={'Authorization':'token '+ghToken,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};
+          let sha=''; const getRes=await fetch(apiUrl,{headers:hdrs}); if(getRes.ok){const dd=await getRes.json();sha=dd.sha;}
+          const body={message:'Subir entregable: '+safeName,content:b64}; if(sha)body.sha=sha;
+          const putRes=await fetch(apiUrl,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});
+          if(!putRes.ok){const err=await putRes.json();throw new Error(err.message||putRes.status);}
+          const isUserSite=ghRepo===ghUser+'.github.io';
+          d.deliverableUrl=isUserSite?`https://${ghUser}.github.io/${safeName}`:`https://${ghUser}.github.io/${ghRepo}/${safeName}`;
+          onSuccess();
+          await saveToGitHub();
+          showToast('PDF subido y guardado');
+        }catch(err){setSaveState('error','Error al subir');showToast('Error: '+err.message);console.error(err);}
+        e.target.value='';
+      });
+      fileInp.click();
+    }
+
+    function renderDeliverableList(){
+      delivListEl.innerHTML='';
+      phase.tasks.forEach((d,di)=>{
+        if(!d.deliverable) return;
+        const group=document.createElement('div'); group.className='ed-task-group ed-deliverable-group';
+        const isPdf=!d.deliverableType||d.deliverableType==='pdf';
+        const hasFile=isPdf&&!!d.deliverableUrl;
+        const row=document.createElement('div'); row.className='ed-task-row';
+        const ni=document.createElement('input'); ni.className='em-input'; ni.type='text'; ni.value=d.name.replace(/^Deliverable:\s*/i,''); ni.style.flex='1';
+        ni.addEventListener('input',()=>{ d.name=ni.value; });
+        const typeSel=document.createElement('select'); typeSel.className='ed-status-tag'; typeSel.style.width='70px';
+        [{v:'pdf',l:'PDF'},{v:'link',l:'Enlace'}].forEach(({v,l})=>{ const o=document.createElement('option'); o.value=v; o.textContent=l; if((d.deliverableType||'pdf')===v)o.selected=true; typeSel.appendChild(o); });
+        typeSel.addEventListener('change',()=>{ d.deliverableType=typeSel.value; renderDeliverableList(); });
+        const db=document.createElement('button'); db.className='ed-task-del'; db.innerHTML=TRASH_SVG;
+        db.addEventListener('click',()=>{ phase.tasks.splice(di,1); renderDeliverableList(); });
+        row.appendChild(ni); row.appendChild(typeSel); row.appendChild(db);
+        const dateRow=document.createElement('div'); dateRow.className='ed-field'; dateRow.style.cssText='flex-direction:row;align-items:center;gap:10px;margin:6px 0 0;';
+        const dateLbl=document.createElement('label'); dateLbl.className='em-label'; dateLbl.textContent='Fecha de entrega'; dateLbl.style.flexShrink='0';
+        const dateInp=document.createElement('input'); dateInp.className='em-input'; dateInp.type='date'; dateInp.style.flex='1';
+        if(d.dueDate && /^\d{4}-\d{2}-\d{2}$/.test(d.dueDate)) dateInp.value=d.dueDate;
+        if(hasFile){ dateInp.disabled=true; dateInp.style.opacity='0.45'; }
+        dateInp.addEventListener('input',()=>{ d.dueDate=dateInp.value||undefined; });
+        dateRow.appendChild(dateLbl); dateRow.appendChild(dateInp);
+        const mediaWrap=document.createElement('div'); mediaWrap.className='ed-deliverable-upload';
+        if(isPdf){
+          const inner=document.createElement('div'); inner.style.cssText='display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;';
+          const urlInp=document.createElement('input'); urlInp.className='em-input'; urlInp.type='url'; urlInp.style.cssText='flex:1;font-size:11px;'+(d.deliverableUrl?'opacity:0.45;':''); urlInp.disabled=!!d.deliverableUrl; urlInp.placeholder='Sin PDF cargado aún'; urlInp.value=d.deliverableUrl||'';
+          const clrBtn=document.createElement('button'); clrBtn.className='ed-meeting-chip-rm'; clrBtn.textContent='×'; clrBtn.title='Eliminar'; clrBtn.style.display=d.deliverableUrl?'flex':'none';
+          clrBtn.addEventListener('click',()=>{ d.deliverableUrl=undefined; renderDeliverableList(); saveToGitHub(); });
+          inner.appendChild(urlInp); inner.appendChild(clrBtn);
+          if(d.deliverableUrl){ const viewBtn=document.createElement('a'); viewBtn.className='btn'; viewBtn.href=d.deliverableUrl; viewBtn.target='_blank'; viewBtn.rel='noopener'; viewBtn.textContent='Ver'; viewBtn.style.cssText='padding:6px 12px;font-size:10px;'; inner.appendChild(viewBtn); }
+          const upBtn=document.createElement('button'); upBtn.className='btn'; upBtn.style.cssText='padding:6px 12px;font-size:10px;'; upBtn.textContent=d.deliverableUrl?'Reemplazar PDF':'Subir PDF';
+          upBtn.addEventListener('click',()=>uploadDeliverablePdf(d,renderDeliverableList));
+          inner.appendChild(upBtn); mediaWrap.appendChild(inner);
+        } else {
+          const urlInp=document.createElement('input'); urlInp.className='em-input'; urlInp.type='url'; urlInp.placeholder='https://…'; urlInp.value=d.deliverableUrl||''; urlInp.style.cssText='width:100%;margin-top:6px;';
+          urlInp.addEventListener('input',()=>{ d.deliverableUrl=urlInp.value.trim()||undefined; });
+          mediaWrap.appendChild(urlInp);
+        }
+        const descTa=document.createElement('textarea'); descTa.className='em-textarea ed-task-desc';
+        descTa.placeholder='Descripción o nota para el cliente…';
+        descTa.value=d.description||'';
+        descTa.addEventListener('input',()=>{ d.description=descTa.value||undefined; });
+        if(hasFile){
+          group.style.cssText='display:flex;gap:16px;align-items:flex-start;';
+          const leftCol=document.createElement('div'); leftCol.style.cssText='flex:1;min-width:0;';
+          leftCol.appendChild(row); leftCol.appendChild(dateRow); leftCol.appendChild(descTa); leftCol.appendChild(mediaWrap);
+          const rightCol=document.createElement('div'); rightCol.style.cssText='flex-shrink:0;width:155px;';
+          const iframe=document.createElement('iframe'); iframe.src=d.deliverableUrl;
+          iframe.style.cssText='width:100%;height:90px;border:1px solid var(--gray-200);border-radius:var(--r-sm);background:#fff;display:block;pointer-events:none;overflow:hidden;';
+          iframe.title='Vista previa PDF';
+          rightCol.appendChild(iframe);
+          group.appendChild(leftCol); group.appendChild(rightCol);
+        } else {
+          group.appendChild(row); group.appendChild(dateRow); group.appendChild(descTa); group.appendChild(mediaWrap);
+        }
+        delivListEl.appendChild(group);
+      });
+      const addRow=document.createElement('div'); addRow.style.paddingTop='10px';
+      const addBtn=document.createElement('button'); addBtn.className='btn'; addBtn.textContent='+ Añadir entregable'; addBtn.style.width='100%';
+      addBtn.addEventListener('click',()=>{ phase.tasks.push({id:'d'+Date.now(),name:'Nuevo entregable',done:false,deliverable:true,deliverableType:'pdf'}); renderDeliverableList(); });
+      addRow.appendChild(addBtn); delivListEl.appendChild(addRow);
+    }
+    renderDeliverableList();
+
+    // Reuniones vinculadas
+    if(!phase.meetingIds){ phase.meetingIds=phase.meetingId?[phase.meetingId]:[]; delete phase.meetingId; }
+    const meetSecTitle=document.createElement('div'); meetSecTitle.className='ed-section-title'; meetSecTitle.textContent='Reuniones vinculadas'; body.appendChild(meetSecTitle);
+    const meetLinksEl=document.createElement('div'); body.appendChild(meetLinksEl);
+    function renderMeetingLinks(){
+      meetLinksEl.innerHTML='';
+      phase.meetingIds.forEach(mid=>{
+        const m=meetings.find(x=>x.id===mid); if(!m) return;
+        const chip=document.createElement('div'); chip.className='ed-meeting-chip';
+        const lbl=document.createElement('span'); lbl.className='ed-meeting-chip-label'; lbl.textContent=m.title+' — '+m.date;
+        const rmBtn=document.createElement('button'); rmBtn.className='ed-meeting-chip-rm'; rmBtn.textContent='×';
+        rmBtn.addEventListener('click',()=>{ phase.meetingIds=phase.meetingIds.filter(id=>id!==mid); renderMeetingLinks(); });
+        chip.appendChild(lbl); chip.appendChild(rmBtn); meetLinksEl.appendChild(chip);
+      });
+      const unlinked=meetings.filter(m=>!phase.meetingIds.includes(m.id));
+      if(unlinked.length){
+        const addRow=document.createElement('div'); addRow.style.marginTop='6px';
+        const addSel=document.createElement('select'); addSel.className='em-input'; addSel.style.width='100%';
+        const noneOpt=document.createElement('option'); noneOpt.value=''; noneOpt.textContent='+ Añadir reunión…'; addSel.appendChild(noneOpt);
+        unlinked.forEach(m=>{ const opt=document.createElement('option'); opt.value=m.id; opt.textContent=m.title+' — '+m.date; addSel.appendChild(opt); });
+        addSel.addEventListener('change',()=>{ if(addSel.value){ phase.meetingIds.push(addSel.value); renderMeetingLinks(); } });
+        addRow.appendChild(addSel); meetLinksEl.appendChild(addRow);
+      }
+    }
+    renderMeetingLinks();
+
+    document.getElementById('edDockOverlay').classList.add('open');
+  }
+
+  // ── RENDER GANTT ───────────────────────────────────────────────────────────
+  let ganttBuilt = false;
+  function renderGantt(){
+    if (!ganttBuilt) { autoFitWeekWidth(); ganttBuilt = true; }
+    buildZoomBar(phases, true, openPhaseEditor, addPhase);
+    buildGantt(phases,{editable:true,onPhaseClick:openPhaseEditor,onAddPhase:addPhase,onReorder:()=>renderSummary(phases),hasDraft:_hasDraft});
+    buildMobileSchedule(phases, openPhaseEditor);
+    renderSummary(phases);
+  }
+
+  // ── RENDER MEETINGS EDITOR ─────────────────────────────────────────────────
+  function renderMeetingsEditor(){
+    const list=document.getElementById('emList'); list.innerHTML='';
+    meetings.forEach((m,idx)=>{
+      const card=document.createElement('div'); card.className='em-meeting'; card.dataset.id=m.id;
+
+      const hdr=document.createElement('div'); hdr.className='em-meeting-header';
+      const info=document.createElement('div');
+      const nameEl=document.createElement('div'); nameEl.className='em-meeting-name'; nameEl.textContent=m.title; info.appendChild(nameEl);
+      const metaEl=document.createElement('div'); metaEl.className='em-meeting-meta'; metaEl.textContent=m.date+' · '+m.time+' · '+m.duration+' min'; info.appendChild(metaEl);
+      const right=document.createElement('div'); right.style.cssText='display:flex;align-items:center;gap:4px;';
+      const tog=document.createElement('div'); tog.className='em-meeting-toggle'; tog.textContent='▼';
+      const del=document.createElement('button'); del.className='em-del-btn'; del.innerHTML=TRASH_SVG; del.title='Eliminar reunión';
+      del.addEventListener('click',e=>{ e.stopPropagation(); if(!confirm('¿Eliminar "'+m.title+'"?')) return; meetings.splice(idx,1); renderMeetingsEditor(); });
+      right.appendChild(tog); right.appendChild(del);
+      hdr.appendChild(info); hdr.appendChild(right);
+      hdr.addEventListener('click',()=>{ card.classList.toggle('open'); });
+      card.appendChild(hdr);
+
+      const body=document.createElement('div'); body.className='em-meeting-body';
+
+      function field(label, inputEl, full){
+        const wrap=document.createElement('div'); wrap.className='em-field'+(full?' full':'');
+        const lbl=document.createElement('label'); lbl.className='em-label'; lbl.textContent=label;
+        wrap.appendChild(lbl); wrap.appendChild(inputEl); return wrap;
+      }
+      function inp(type,val,key){
+        const el=document.createElement('input'); el.className='em-input'; el.type=type; el.value=val;
+        el.addEventListener('input',()=>{ meetings[idx][key]=el.value; refreshMeetingMeta(card,meetings[idx]); });
+        return el;
+      }
+      function txta(val,key){
+        const el=document.createElement('textarea'); el.className='em-textarea'; el.value=val;
+        el.addEventListener('input',()=>{ meetings[idx][key]=el.value; });
+        return el;
+      }
+
+      const durWrap=document.createElement('div'); durWrap.className='em-dur';
+      const durInp=document.createElement('input'); durInp.className='em-input'; durInp.type='number'; durInp.value=m.duration; durInp.min=5; durInp.step=5;
+      durInp.addEventListener('input',()=>{ meetings[idx].duration=parseInt(durInp.value)||30; refreshMeetingMeta(card,meetings[idx]); });
+      const durLbl=document.createElement('span'); durLbl.textContent='minutos';
+      durWrap.appendChild(durInp); durWrap.appendChild(durLbl);
+
+      body.appendChild(field('Título',           inp('text',m.title,'title'),   true));
+      body.appendChild(field('Fecha',            inp('date',m.date,'date')));
+      body.appendChild(field('Hora (24h)',        inp('time',m.time,'time')));
+      const durField=document.createElement('div'); durField.className='em-field';
+      const durLabel=document.createElement('label'); durLabel.className='em-label'; durLabel.textContent='Duración';
+      durField.appendChild(durLabel); durField.appendChild(durWrap); body.appendChild(durField);
+      body.appendChild(field('Enlace Meet',      inp('url',m.meetLink,'meetLink'), true));
+      body.appendChild(field('Descripción',      txta(m.description,'description'), true));
+
+      card.appendChild(body);
+      list.appendChild(card);
+    });
+  }
+
+  function refreshMeetingMeta(card,m){
+    const meta=card.querySelector('.em-meeting-meta');
+    if(meta) meta.textContent=m.date+' · '+m.time+' · '+m.duration+' min';
+  }
+
+  // ── GITHUB CREDENTIALS ────────────────────────────────────────────────────
+  let ghUser=localStorage.getItem('gh_user')||'';
+  let ghRepo=localStorage.getItem('gh_repo')||'';
+  let ghToken=localStorage.getItem('gh_token')||'';
+  let cachedSha='';
+
+  function isConnected(){ return !!(ghUser&&ghRepo&&ghToken); }
+  async function prefetchSha(){
+    if(!isConnected()||cachedSha) return;
+    try{
+      const r=await fetch(`https://api.github.com/repos/${ghUser}/${ghRepo}/contents/data.js`,{headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}});
+      if(r.ok){ const d=await r.json(); cachedSha=d.sha; }
+    }catch(_){}
+  }
+  function applyConnectionUI(){
+    const banner=document.getElementById('setupBanner');
+    const dot=document.getElementById('saveDot');
+    const text=document.getElementById('saveText');
+    if(isConnected()){
+      banner.style.display='none';
+      dot.className='save-dot saved'; text.textContent=ghUser+'/'+ghRepo;
+      prefetchSha();
+    } else {
+      banner.style.display='flex'; dot.className='save-dot'; text.textContent='Sin conexión';
+      document.getElementById('ghUser').value=ghUser;
+      document.getElementById('ghRepo').value=ghRepo;
+      document.getElementById('ghToken').value=ghToken;
+    }
+  }
+  document.getElementById('connectBtn').addEventListener('click',()=>{
+    const u=document.getElementById('ghUser').value.trim();
+    const r=document.getElementById('ghRepo').value.trim();
+    const t=document.getElementById('ghToken').value.trim();
+    if(!u||!r||!t){showToast('Rellena los tres campos');return;}
+    ghUser=u;ghRepo=r;ghToken=t;
+    localStorage.setItem('gh_user',ghUser);
+    localStorage.setItem('gh_repo',ghRepo);
+    localStorage.setItem('gh_token',ghToken);
+    cachedSha='';
+    applyConnectionUI(); showToast('Conectado a '+ghUser+'/'+ghRepo);
+  });
+
+  // ── SAVE TO GITHUB ─────────────────────────────────────────────────────────
+  async function saveToGitHub(){
+    setSaveState('saving','Guardando…');
+
+    const phaseSnap=phases.map(p=>({id:p.id,name:p.name,start:p.start,end:p.end,...(p.description?{description:p.description}:{}),...(p.meetingIds&&p.meetingIds.length?{meetingIds:p.meetingIds}:{}),tasks:p.tasks.map(t=>({id:t.id,name:t.name,done:!!t.done,status:t.status||(t.done?'approved':t.inProgress?'in-progress':'todo'),...(t.dueDate?{dueDate:t.dueDate}:{}),...(t.deliverable?{deliverable:true}:{}),...(t.deliverableType?{deliverableType:t.deliverableType}:{}),...(t.deliverableUrl?{deliverableUrl:t.deliverableUrl}:{}),...(t.description?{description:t.description}:{}),...(t.clientInput?{clientInput:true}:{})}))}));
+    const meetSnap=meetings.map(m=>({id:m.id,title:m.title,date:m.date,time:m.time,duration:m.duration,description:m.description,meetLink:m.meetLink}));
+    const clientName=typeof CLIENT_NAME!=='undefined'?CLIENT_NAME:'';
+    const today=new Date(); const lastUpdated=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+    const launchDate=phases.length?phases[phases.length-1].end:(typeof LAUNCH_DATE!=='undefined'?LAUNCH_DATE:'');
+    const email=typeof YOUR_EMAIL!=='undefined'?YOUR_EMAIL:'you@example.com';
+    const quotUrl=editorQuotUrl;
+    const laboisUrl=editorLaboisUrl;
+    const shareUrl=editorShareUrl;
+
+    const newContent=`// ── PROJECT DATA (auto-saved) ──────────────────────────────────────────────
+const CLIENT_NAME   = ${JSON.stringify(clientName)};
+const LAST_UPDATED  = ${JSON.stringify(lastUpdated)};
+const LAUNCH_DATE   = ${JSON.stringify(launchDate)};
+const PHASES = ${JSON.stringify(phaseSnap,null,2)};
+
+const YOUR_EMAIL    = ${JSON.stringify(email)};
+
+// ── CLIENT QUICK-LINKS ────────────────────────────────────────────────────────
+const QUOTATION_URL = ${JSON.stringify(quotUrl)};
+const MIRO_URL      = ${JSON.stringify(laboisUrl)};
+const SHARE_URL     = ${JSON.stringify(shareUrl)};
+
+const MEETINGS = ${JSON.stringify(meetSnap,null,2)};
+`;
+
+    if(!isConnected()){
+      document.getElementById('setupBanner').style.display='flex';
+      setSaveState('','Sin conexión');
+      showToast('Conecta con GitHub primero'); return;
+    }
+
+    const apiBase=`https://api.github.com/repos/${ghUser}/${ghRepo}/contents/data.js`;
+    const headers={'Authorization':'token '+ghToken,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};
+
+    try {
+      let sha=cachedSha;
+      if(!sha){
+        const getRes=await fetch(apiBase,{headers});
+        if(getRes.status===401){setSaveState('error','Token incorrecto');showToast('Token de GitHub rechazado');return;}
+        if(getRes.status===404){setSaveState('error','Archivo no encontrado');showToast('No se encontró data.js en '+ghUser+'/'+ghRepo);return;}
+        sha=(await getRes.json()).sha;
+      }
+      const putRes=await fetch(apiBase,{method:'PUT',headers,body:JSON.stringify({message:'Actualizar progreso del proyecto',content:btoa(unescape(encodeURIComponent(newContent))),sha})});
+      if(putRes.status===409){ cachedSha=''; setSaveState('error','Conflicto — reintenta'); showToast('Conflicto, vuelve a guardar'); return; }
+      if(!putRes.ok){const e=await putRes.json();throw new Error(e.message||putRes.status);}
+      const putData=await putRes.json();
+      cachedSha=putData.content.sha;
+      setSaveState('saved','Guardado · '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}));
+      clearDraft();
+      showToast('Guardado — la página del cliente se actualiza en ~30s');
+    } catch(err){
+      setSaveState('error','Error al guardar');
+      showToast('Error: '+err.message); console.error(err);
+    }
+  }
+
+  function setSaveState(state,text){
+    document.getElementById('saveDot').className='save-dot '+state;
+    document.getElementById('saveText').textContent=text;
+  }
+
+  // ── LOCAL DRAFT SAVE ──────────────────────────────────────────────────────
+  let _hasDraft = false;
+  function showDraftBadge(show){
+    _hasDraft = show;
+    document.getElementById('draftBadge').style.display = show ? '' : 'none';
+    ['tabDotGantt','tabDotMeetings','tabDotLinks','dockDraftDot'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.classList.toggle('visible',show);
+    });
+  }
+  function saveDraft(){
+    try {
+      const snap = {
+        phases:    phases.map(p=>({...p, tasks:p.tasks.map(t=>({...t}))})),
+        meetings:  meetings.map(m=>({...m})),
+        quotUrl:   editorQuotUrl,
+        laboisUrl: editorLaboisUrl,
+        shareUrl:  editorShareUrl,
+        ts: Date.now()
+      };
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(snap));
+      showDraftBadge(true);
+      showToast('Borrador guardado en el navegador');
+    } catch(e) {
+      showToast('No se pudo guardar el borrador');
+    }
+  }
+  function clearDraft(){
+    localStorage.removeItem(DRAFT_KEY);
+    showDraftBadge(false);
+  }
+
+  document.getElementById('saveBtn').addEventListener('click',saveToGitHub);
+  document.getElementById('ganttSaveDraftBtn').addEventListener('click',saveDraft);
+
+  // ── EDITOR TABS ────────────────────────────────────────────────────────────
+  document.getElementById('edTabGantt').addEventListener('click',()=>{
+    document.getElementById('edGanttView').style.display='block';
+    document.getElementById('edMeetingsView').style.display='none';
+    document.getElementById('edLinksView').style.display='none';
+    document.getElementById('edLegend').style.display='flex';
+    document.getElementById('summary').style.display='';
+    ['edTabMeetings','edTabLinks'].forEach(id=>document.getElementById(id).classList.remove('active'));
+    document.getElementById('edTabGantt').classList.add('active');
+    renderGantt();
+  });
+  document.getElementById('edTabMeetings').addEventListener('click',()=>{
+    document.getElementById('edGanttView').style.display='none';
+    document.getElementById('edMeetingsView').style.display='block';
+    document.getElementById('edLinksView').style.display='none';
+    document.getElementById('edLegend').style.display='none';
+    document.getElementById('summary').style.display='none';
+    ['edTabGantt','edTabLinks'].forEach(id=>document.getElementById(id).classList.remove('active'));
+    document.getElementById('edTabMeetings').classList.add('active');
+    renderMeetingsEditor();
+  });
+
+  // ── ADD PHASE ──────────────────────────────────────────────────────────────
+  function addPhase(){
+    const n = phases.length + 1;
+    const fmt = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const lastPhase = phases[phases.length - 1];
+    const startBase = lastPhase ? new Date(lastPhase.end) : new Date();
+    startBase.setDate(startBase.getDate() + 1);
+    const endBase = new Date(startBase); endBase.setDate(endBase.getDate() + 13);
+    const newPhase = {
+      id: n, name: 'Fase '+n+': Nueva fase',
+      start: fmt(startBase), end: fmt(endBase),
+      tasks: [], expanded: false,
+    };
+    phases.push(newPhase);
+    renderGantt();
+    openPhaseEditor(phases[phases.length-1], phases.length-1);
+  }
+
+  // ── ADD MEETING ────────────────────────────────────────────────────────────
+  function addMeeting(){
+    const today=new Date();
+    const pad=n=>String(n).padStart(2,'0');
+    const dateStr=today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
+    meetings.push({ id:'m'+Date.now(), title:'Nueva reunión', date:dateStr, time:'10:00', duration:60, description:'', meetLink:'' });
+    renderMeetingsEditor();
+    const cards=document.querySelectorAll('.em-meeting');
+    const last=cards[cards.length-1];
+    if(last){ last.classList.add('open'); last.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+  }
+  document.getElementById('addMeetingBtn').addEventListener('click', addMeeting);
+
+  // ── LINKS SETTINGS ─────────────────────────────────────────────────────────
+  function setLinkStatus(dotId, textId, val){
+    document.getElementById(dotId).className='link-status-dot'+(val?' set':'');
+    document.getElementById(textId).textContent=val?'Configurado':'';
+  }
+  const quotInp    = document.getElementById('quotUrlInput');
+  const laboisInp  = document.getElementById('laboisUrlInput');
+  const protoInp   = document.getElementById('protoUrlInput');
+  const quotUploadBtn = document.getElementById('quotUploadBtn');
+  const quotClearBtn  = document.getElementById('quotClearBtn');
+
+  function updateQuotBtn(){
+    const has=!!editorQuotUrl;
+    quotUploadBtn.textContent=has?'Reemplazar PDF':'Subir PDF';
+    quotInp.disabled=has;
+    quotInp.style.opacity=has?'0.45':'1';
+    quotClearBtn.style.display=has?'flex':'none';
+  }
+  quotInp.value=editorQuotUrl;       setLinkStatus('quotStatusDot','quotStatusText',editorQuotUrl);     updateQuotBtn();
+  laboisInp.value=editorLaboisUrl;   setLinkStatus('laboisStatusDot','laboisStatusText',editorLaboisUrl);
+  protoInp.value=editorShareUrl;     setLinkStatus('protoStatusDot','protoStatusText',editorShareUrl);
+
+  quotClearBtn.addEventListener('click',()=>{ editorQuotUrl=''; quotInp.value=''; setLinkStatus('quotStatusDot','quotStatusText',''); updateQuotBtn(); saveToGitHub(); });
+  quotInp.addEventListener('input',()=>{ editorQuotUrl=quotInp.value.trim(); setLinkStatus('quotStatusDot','quotStatusText',editorQuotUrl); updateQuotBtn(); });
+  laboisInp.addEventListener('input',()=>{ editorLaboisUrl=laboisInp.value.trim(); setLinkStatus('laboisStatusDot','laboisStatusText',editorLaboisUrl); });
+  protoInp.addEventListener('input',()=>{ editorShareUrl=protoInp.value.trim(); setLinkStatus('protoStatusDot','protoStatusText',editorShareUrl); });
+
+  // PDF upload to GitHub
+  quotUploadBtn.addEventListener('click',()=>document.getElementById('quotFileInput').click());
+  document.getElementById('quotFileInput').addEventListener('change',async(e)=>{
+    const file=e.target.files[0]; if(!file) return;
+    if(!isConnected()){showToast('Conecta con GitHub primero');return;}
+    setSaveState('saving','Subiendo PDF…');
+    try{
+      const buf=await file.arrayBuffer();
+      let bin=''; const bytes=new Uint8Array(buf); for(let i=0;i<bytes.length;i++) bin+=String.fromCharCode(bytes[i]);
+      const b64=btoa(bin);
+      const filename='quotation.pdf';
+      const apiUrl=`https://api.github.com/repos/${ghUser}/${ghRepo}/contents/${filename}`;
+      const headers={'Authorization':'token '+ghToken,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};
+      let sha='';
+      const getRes=await fetch(apiUrl,{headers}); if(getRes.ok){const d=await getRes.json();sha=d.sha;}
+      const body={message:'Subir PDF de presupuesto',content:b64}; if(sha)body.sha=sha;
+      const putRes=await fetch(apiUrl,{method:'PUT',headers,body:JSON.stringify(body)});
+      if(!putRes.ok){const err=await putRes.json();throw new Error(err.message||putRes.status);}
+      const isUserSite=ghRepo===ghUser+'.github.io';
+      const pageUrl=isUserSite?`https://${ghUser}.github.io/${filename}`:`https://${ghUser}.github.io/${ghRepo}/${filename}`;
+      editorQuotUrl=pageUrl; quotInp.value=pageUrl;
+      setLinkStatus('quotStatusDot','quotStatusText',editorQuotUrl); updateQuotBtn();
+      await saveToGitHub();
+      showToast('PDF subido y guardado');
+    }catch(err){setSaveState('error','Error al subir');showToast('Error: '+err.message);console.error(err);}
+    e.target.value='';
+  });
+
+  document.getElementById('edTabLinks').addEventListener('click',()=>{
+    document.getElementById('edGanttView').style.display='none';
+    document.getElementById('edMeetingsView').style.display='none';
+    document.getElementById('edLinksView').style.display='block';
+    document.getElementById('edLegend').style.display='none';
+    document.getElementById('summary').style.display='none';
+    ['edTabGantt','edTabMeetings'].forEach(id=>document.getElementById(id).classList.remove('active'));
+    document.getElementById('edTabLinks').classList.add('active');
+  });
+
+  // ── INIT ───────────────────────────────────────────────────────────────────
+  initTooltip();
+  applyConnectionUI();
+  renderGantt();
+  if (_draftRestored) { showDraftBadge(true); showToast('Borrador restaurado del navegador'); }
+
+  const _edOv=document.getElementById('edDockOverlay');
+  document.getElementById('edDockClose').addEventListener('click',()=>_edOv.classList.remove('open'));
+  document.getElementById('edDockSaveBtn').addEventListener('click', saveDraft);
+  _edOv.addEventListener('click',e=>{ if(e.target===_edOv) _edOv.classList.remove('open'); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') _edOv.classList.remove('open'); });
+</script>
+</body>
+</html>

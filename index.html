@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planner — Scrollytelling</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css" id="vStyle">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="header-title-row">
+      <h1>Progreso del Proyecto</h1><span class="header-client" id="headerClient"></span>
+    </div>
+    <h2>Cronograma de Desarrollo</h2>
+    <div class="header-meta" id="headerMeta"></div>
+  </div>
+  <div class="nav-drawer" id="navDrawer">
+    <div class="view-tabs">
+      <button class="tab active" id="tabGantt">Cronograma</button>
+      <button class="tab" id="tabCards">Tablero</button>
+      <button class="tab" id="tabMeetings">Reuniones</button>
+    </div>
+    <div class="header-actions" id="headerActions"></div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">◐</button>
+  </div>
+  <button class="burger-btn" id="burgerBtn" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- Gantt legend (shown only in gantt/timeline view) -->
+<div class="legend" id="legendBar">
+  <div class="legend-item"><div class="legend-swatch"></div> Pendiente</div>
+  <div class="legend-item"><div class="legend-swatch inprogress"></div> En progreso</div>
+  <div class="legend-item"><div class="legend-swatch done"></div> Completado</div>
+  <span class="legend-hint">Haz clic en una fase para ver los detalles</span>
+</div>
+
+<!-- ── GANTT (desktop) / VERTICAL SCHEDULE (mobile) ── -->
+<div id="ganttView">
+  <!-- horizontal gantt — hidden on mobile via CSS -->
+  <div class="gantt-outer">
+    <div class="chart-wrap" id="chartWrap"></div>
+  </div>
+  <!-- vertical schedule — shown on mobile via CSS -->
+  <div class="mobile-schedule" id="mobileSchedule"></div>
+</div>
+
+<!-- ── BOARD (cards) ── -->
+<div id="cardView">
+  <div class="card-grid" id="cardGrid"></div>
+</div>
+
+<!-- ── MEETINGS ── -->
+<div id="meetingsView">
+  <div class="meetings-subbar">
+    <div class="view-tabs" id="meetViewTabs">
+      <button class="tab active" id="meetTabCards">Tarjetas</button>
+      <button class="tab" id="meetTabList">Lista</button>
+    </div>
+  </div>
+  <div class="meetings-wrap" id="meetingsWrap"></div>
+</div>
+
+<div class="summary" id="summary"></div>
+<div class="tooltip" id="tooltip"></div>
+
+<!-- ── SIDE DOCK (phase detail) ── -->
+<div class="dock-overlay" id="dockOverlay">
+  <div class="dock">
+    <div class="dock-header">
+      <div class="dock-title-group">
+        <div class="dock-phase-num" id="dockPhaseNum"></div>
+        <div class="dock-title"     id="dockTitle"></div>
+        <div class="dock-dates"     id="dockDates"></div>
+      </div>
+      <button class="dock-close" id="dockClose">✕</button>
+    </div>
+    <div class="dock-body">
+      <div class="dock-progress-block">
+        <div class="dock-big-pct" id="dockBigPct"></div>
+        <div class="dock-progress-right">
+          <div class="dock-progress-label">Phase Completion</div>
+          <div class="dock-track"><div class="dock-fill" id="dockFill"></div></div>
+        </div>
+      </div>
+      <div class="dock-status-row">
+        <span class="dock-status-label">Status</span>
+        <span class="status-pill" id="dockStatusPill"></span>
+      </div>
+      <div class="dock-section-title">Tareas</div>
+      <ul class="dock-task-list" id="dockTaskList"></ul>
+    </div>
+  </div>
+</div>
+
+<!-- ── CHANGE REQUEST MODAL ── -->
+<div class="cr-overlay" id="crOverlay">
+  <div class="cr-modal">
+    <div class="cr-header">
+      <div>
+        <div class="cr-title">Solicitar un cambio</div>
+        <div class="cr-subtitle" id="crMeetingName"></div>
+      </div>
+      <button class="cr-close" id="crClose">✕</button>
+    </div>
+    <div class="cr-body">
+      <div class="cr-row">
+        <div class="cr-field">
+          <label class="cr-label">Fecha preferida</label>
+          <input class="cr-input" type="date" id="crDate">
+        </div>
+        <div class="cr-field">
+          <label class="cr-label">Hora preferida</label>
+          <input class="cr-input" type="time" id="crTime">
+        </div>
+      </div>
+      <div class="cr-field">
+        <label class="cr-label">Nota (opcional)</label>
+        <textarea class="cr-textarea" id="crNote" placeholder="Cualquier cosa que quieras comunicarnos…"></textarea>
+      </div>
+      <div class="cr-footer">
+        <button class="cr-cancel" id="crCancel">Cancelar</button>
+        <button class="cr-send"   id="crSend">Enviar solicitud</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── COPYRIGHT FOOTER ── -->
+<div class="site-footer">© Camille Jackson</div>
+
+<script>document.write('\x3Cscript src="data.js?_='+Date.now()+'">\x3C\/script>');</script>
+<script>
+  (function(){
+    const v=(typeof LAST_UPDATED!=='undefined'?LAST_UPDATED:'').replace(/-/g,'');
+    document.getElementById('vStyle').href='style.css?v='+(v||'1');
+    document.write('\x3Cscript src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">\x3C\/script>');
+    document.write('\x3Cscript src="utils.js?v='+(v||'1')+'">\x3C\/script>');
+  })();
+</script>
+<script>
+  if(typeof pdfjsLib!=='undefined') pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const phases = PHASES.map(p=>({...p, tasks:p.tasks.map(t=>({...t}))})).sort((a,b)=>a.start<b.start?-1:a.start>b.start?1:0);
+  let currentView = 'gantt';
+  let meetingSubView = 'cards';
+
+  const tabs = {
+    gantt:    document.getElementById('tabGantt'),
+    cards:    document.getElementById('tabCards'),
+    meetings: document.getElementById('tabMeetings'),
+  };
+  const views = {
+    gantt:    document.getElementById('ganttView'),
+    cards:    document.getElementById('cardView'),
+    meetings: document.getElementById('meetingsView'),
+  };
+
+  let ganttBuilt = false;
+
+  function switchTo(name) {
+    currentView = name;
+    Object.keys(views).forEach(k => {
+      views[k].style.display = k===name ? 'block' : 'none';
+      tabs[k].classList.toggle('active', k===name);
+    });
+    document.getElementById('legendBar').style.display = name==='gantt' ? 'flex' : 'none';
+    document.getElementById('summary').style.display   = name==='meetings' ? 'none' : '';
+
+    if (name==='gantt') {
+      if (!ganttBuilt) { autoFitWeekWidth(); ganttBuilt = true; }
+      buildZoomBar(phases, false, null);
+      buildGantt(phases, {editable: false});
+      buildMobileSchedule(phases);
+      buildStatusStrip(phases);
+      renderSummary(phases);
+    } else if (name==='cards') {
+      buildCards(phases);
+      renderSummary(phases);
+    } else if (name==='meetings') {
+      buildCalendar(meetingSubView);
+    }
+  }
+
+  tabs.gantt.addEventListener('click',    ()=>switchTo('gantt'));
+  tabs.cards.addEventListener('click',    ()=>switchTo('cards'));
+  tabs.meetings.addEventListener('click', ()=>switchTo('meetings'));
+
+  // ── MEETING SUB-VIEW TABS ───────────────────────────────────────────────────
+  document.getElementById('meetTabCards').addEventListener('click', ()=>{
+    meetingSubView='cards';
+    document.getElementById('meetTabCards').classList.add('active');
+    document.getElementById('meetTabList').classList.remove('active');
+    buildCalendar('cards');
+  });
+  document.getElementById('meetTabList').addEventListener('click', ()=>{
+    meetingSubView='list';
+    document.getElementById('meetTabList').classList.add('active');
+    document.getElementById('meetTabCards').classList.remove('active');
+    buildCalendar('list');
+  });
+
+  // re-fit on resize (debounced)
+  let _rto;
+  window.addEventListener('resize', ()=>{
+    if (currentView!=='gantt') return;
+    clearTimeout(_rto);
+    _rto = setTimeout(()=>{ autoFitWeekWidth(); buildGantt(phases,{editable:false}); }, 200);
+  });
+
+  // ── HEADER ACTIONS ─────────────────────────────────────────────────────────
+  (function(){
+    const ha = document.getElementById('headerActions');
+    if (!ha) return;
+    const quotUrl  = typeof QUOTATION_URL !== 'undefined' ? QUOTATION_URL : '';
+    const miroUrl  = typeof MIRO_URL      !== 'undefined' ? MIRO_URL      : '';
+    const shareUrl = typeof SHARE_URL     !== 'undefined' ? SHARE_URL     : '';
+    const docIcon  = '<svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px;flex-shrink:0"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>';
+    const miroIcon = '<svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px;flex-shrink:0"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-7 3h2v2h-2V6zm-4 0h2v2H8V6zm8 10H8v-2h8v2zm0-4H8v-2h8v2zm0-4h-2V6h2v2z"/></svg>';
+
+    // Populate client name in header-left
+    if (typeof CLIENT_NAME !== 'undefined' && CLIENT_NAME) {
+      const cEl = document.getElementById('headerClient');
+      if (cEl) cEl.textContent = CLIENT_NAME;
+    }
+
+    const wrap = document.createElement('div'); wrap.className = 'view-tabs';
+
+    // Quotation tab
+    const quot = document.createElement('button');
+    quot.className = 'tab';
+    quot.innerHTML = docIcon + 'Presupuesto';
+    if (quotUrl) {
+      quot.addEventListener('click', ()=>window.open(quotUrl,'_blank','noopener'));
+    } else {
+      quot.title = 'Quotation PDF coming soon';
+    }
+    wrap.appendChild(quot);
+
+    // Diseños tab (enlace a los diseños del cliente)
+    const miro = document.createElement('button');
+    miro.className = 'tab' + (miroUrl ? '' : ' disabled');
+    miro.innerHTML = docIcon + 'Diseños';
+    if (miroUrl) {
+      miro.addEventListener('click', ()=>window.open(miroUrl,'_blank','noopener'));
+    } else {
+      miro.title = 'Diseños pendientes de entrega';
+      miro.style.opacity = '0.45';
+      miro.style.cursor = 'default';
+    }
+    wrap.appendChild(miro);
+
+    if (shareUrl) {
+      const proto = document.createElement('button');
+      proto.className = 'tab active';
+      proto.textContent = 'Ver prototipo';
+      proto.addEventListener('click', ()=>window.open(shareUrl,'_blank','noopener'));
+      wrap.appendChild(proto);
+    }
+    ha.appendChild(wrap);
+  })();
+  (function buildHeaderMeta(){
+    const el=document.getElementById('headerMeta'); if(!el) return;
+    if(typeof LAST_UPDATED!=='undefined'&&LAST_UPDATED){
+      const d=pd(LAST_UPDATED),today=new Date(); today.setHours(0,0,0,0);
+      const days=Math.round((today-d)/86400000);
+      const text=days<=0?'Actualizado hoy':days===1?'Actualizado ayer':'Actualizado hace '+days+' días';
+      const pill=document.createElement('span'); pill.className='header-updated-pill';
+      const dot=document.createElement('span');
+      dot.className='header-updated-dot '+(days<=0?'fresh':days<=3?'recent':'stale');
+      pill.appendChild(dot);
+      pill.appendChild(document.createTextNode(text));
+      el.appendChild(pill);
+    }
+    if(typeof LAUNCH_DATE!=='undefined'&&LAUNCH_DATE){
+      const d=pd(LAUNCH_DATE),today=new Date(); today.setHours(0,0,0,0);
+      const days=Math.round((d-today)/86400000);
+      const badge=document.createElement('span'); badge.className='header-launch-badge';
+      if(days===0){
+        const lbl=document.createElement('span'); lbl.className='header-launch-label'; lbl.textContent='¡Día de lanzamiento!';
+        badge.appendChild(lbl);
+      } else {
+        const num=document.createElement('span'); num.className='header-launch-num'; num.textContent=Math.abs(days);
+        const lbl=document.createElement('span'); lbl.className='header-launch-label';
+        lbl.textContent=days>0?'días para el lanzamiento':'días desde el lanzamiento';
+        badge.appendChild(num); badge.appendChild(lbl);
+      }
+      el.appendChild(badge);
+    }
+  })();
+  // ── THEME TOGGLE ───────────────────────────────────────────────────────────
+  (function initTheme(){
+    const btn=document.getElementById('themeToggle');
+    if(localStorage.getItem('theme')==='dark') document.documentElement.dataset.theme='dark';
+    btn.addEventListener('click',()=>{
+      const dark=document.documentElement.dataset.theme==='dark';
+      document.documentElement.dataset.theme=dark?'':'dark';
+      localStorage.setItem('theme',dark?'':'dark');
+    });
+  })();
+  initTooltip();
+  initDock();
+  initChangeRequest();
+  switchTo('gantt');
+
+  // ── BURGER MENU ────────────────────────────────────────────────────────────
+  (function(){
+    const btn = document.getElementById('burgerBtn');
+    const drawer = document.getElementById('navDrawer');
+    if (!btn || !drawer) return;
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const open = drawer.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    // Close when any tab is clicked
+    drawer.addEventListener('click', function(e) {
+      if (e.target.closest('.tab')) closeDrawer();
+    });
+    // Close on outside click
+    document.addEventListener('click', function(e) {
+      if (!btn.contains(e.target) && !drawer.contains(e.target)) closeDrawer();
+    });
+  })();
+</script>
+</body>
+</html>
