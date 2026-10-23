@@ -113,7 +113,7 @@ const PHASES = [
         "done": false,
         "status": "todo",
         "dueDate": "23 – 27 de noviembre",
-        "description": "Adaptación de las animaciones y del layout a tablet y móvil, según los diseños mobile entregados por el cliente."
+        "description": "Adaptación de las animaciones y del layout a tablet y móvil, según los diseños mobile entregados por DDS."
       },
       {
         "id": "3c",
