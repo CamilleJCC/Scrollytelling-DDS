@@ -1720,8 +1720,8 @@ header {
 }
 
 .dock-phase-desc {
-  font-size: 13px;
-  line-height: 1.2em;
+  font-size: 14px;
+  line-height: 1.4em;
   color: var(--gray-600);
   padding: 14px 0 4px;
   border-bottom: 1px solid var(--gray-100);
@@ -1806,7 +1806,7 @@ header {
   background: var(--gray-50);
   border-radius: var(--r-sm);
   font-size: 14px;
-  line-height: 1.2em;
+  line-height: 1.4em;
   color: var(--gray-600);
   margin-top: -4px;
 }
@@ -1885,7 +1885,7 @@ header {
 
 .dock-deliverable-desc {
   font-size: 14px;
-  line-height: 1.2em;
+  line-height: 1.4em;
   color: var(--gray-600);
 }
 
