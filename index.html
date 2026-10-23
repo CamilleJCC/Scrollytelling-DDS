@@ -237,14 +237,14 @@
     }
     wrap.appendChild(quot);
 
-    // Diseños tab (enlace a los diseños del cliente)
+    // Prototipo tab (diseños finales entregados por el cliente)
     const miro = document.createElement('button');
     miro.className = 'tab' + (miroUrl ? '' : ' disabled');
-    miro.innerHTML = docIcon + 'Diseños';
+    miro.innerHTML = docIcon + 'Prototipo';
     if (miroUrl) {
       miro.addEventListener('click', ()=>window.open(miroUrl,'_blank','noopener'));
     } else {
-      miro.title = 'Diseños pendientes de entrega';
+      miro.title = 'Pendiente: entrega de diseños finales por parte del cliente';
       miro.style.opacity = '0.45';
       miro.style.cursor = 'default';
     }
@@ -253,11 +253,21 @@
     if (shareUrl) {
       const proto = document.createElement('button');
       proto.className = 'tab active';
-      proto.textContent = 'Ver prototipo';
+      proto.textContent = 'Ver Beta';
       proto.addEventListener('click', ()=>window.open(shareUrl,'_blank','noopener'));
       wrap.appendChild(proto);
     }
     ha.appendChild(wrap);
+
+    // Tarifa por hora (top right)
+    const rate = typeof HOURLY_RATE !== 'undefined' ? HOURLY_RATE : '';
+    if (rate) {
+      const rateWrap = document.createElement('div'); rateWrap.className = 'view-tabs header-rate';
+      const ratePill = document.createElement('span'); ratePill.className = 'tab client-tab';
+      ratePill.innerHTML = '<span class="header-rate-label">Tarifa</span>' + rate;
+      rateWrap.appendChild(ratePill);
+      ha.appendChild(rateWrap);
+    }
   })();
   (function buildHeaderMeta(){
     const el=document.getElementById('headerMeta'); if(!el) return;

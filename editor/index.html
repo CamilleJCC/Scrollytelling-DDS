@@ -327,17 +327,17 @@ select.em-input option, select.ed-status-tag option { background: #1e1e1c; color
 
     <div class="links-field">
       <div class="links-field-header">
-        <label class="em-label">Diseños (Figma)</label>
+        <label class="em-label">Prototipo (entrega del cliente)</label>
         <span class="link-status"><span class="link-status-dot" id="laboisStatusDot"></span><span id="laboisStatusText"></span></span>
       </div>
       <div style="display:flex;gap:8px;align-items:start;flex-direction:column;">
-        <input id="laboisUrlInput" class="em-input" type="url" placeholder="https://… (enlace a los diseños del cliente)" style="width:100%">
+        <input id="laboisUrlInput" class="em-input" type="url" placeholder="https://… (enlace al prototipo / diseños finales)" style="width:100%">
       </div>
     </div>
 
     <div class="links-field">
       <div class="links-field-header">
-        <label class="em-label">Ver prototipo</label>
+        <label class="em-label">Ver Beta</label>
         <span class="link-status"><span class="link-status-dot" id="protoStatusDot"></span><span id="protoStatusText"></span></span>
       </div>
       <input id="protoUrlInput" class="em-input" type="url" placeholder="https://…" style="width:100%">
@@ -751,6 +751,7 @@ select.em-input option, select.ed-status-tag option { background: #1e1e1c; color
 const CLIENT_NAME   = ${JSON.stringify(clientName)};
 const LAST_UPDATED  = ${JSON.stringify(lastUpdated)};
 const LAUNCH_DATE   = ${JSON.stringify(launchDate)};
+const HOURLY_RATE   = ${JSON.stringify(typeof HOURLY_RATE!=='undefined'?HOURLY_RATE:'')};
 const PHASES = ${JSON.stringify(phaseSnap,null,2)};
 
 const YOUR_EMAIL    = ${JSON.stringify(email)};

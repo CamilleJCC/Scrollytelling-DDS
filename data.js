@@ -2,6 +2,7 @@
 const CLIENT_NAME   = "Nombre del cliente";
 const LAST_UPDATED  = "2026-10-23";
 const LAUNCH_DATE   = "2026-12-14";
+const HOURLY_RATE   = "60 €/h + IVA";
 const PHASES = [
   {
     "id": 1,
@@ -34,6 +35,16 @@ const PHASES = [
         "status": "todo",
         "dueDate": "4 – 6 de noviembre",
         "description": "Creación de la página en WordPress, estructura de secciones con bloques Group/Cover, clases e IDs para las animaciones y carga de las librerías necesarias."
+      },
+      {
+        "id": "1e",
+        "name": "Prototipo y diseños finales (entrega del cliente)",
+        "done": false,
+        "status": "todo",
+        "dueDate": "2026-11-02",
+        "deliverable": true,
+        "deliverableType": "link",
+        "description": "Entrega por parte del cliente del prototipo y los diseños finales aprobados (desktop y mobile), con las indicaciones de cada animación. Es el punto de partida del desarrollo: sin esta entrega no puede comenzar la construcción."
       },
       {
         "id": "1d",
