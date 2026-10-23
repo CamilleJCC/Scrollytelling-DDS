@@ -18,7 +18,7 @@ const PHASES = [
         "status": "todo",
         "dueDate": "2 de noviembre",
         "clientInput": true,
-        "description": "El cliente entrega los diseños finales de todas las secciones, en desktop y mobile, junto con un prototipo, video de referencia o notas por sección que expliquen el movimiento: qué se fija, qué aparece y qué se mueve con el scroll. Un retraso en esta entrega mueve la fecha de lanzamiento."
+        "description": "DDS entrega los diseños finales de todas las secciones, junto a explicaciones o un video de referencia indicando el movimiento: qué se fija, qué aparece y qué se mueve con el scroll."
       },
       {
         "id": "1b",
